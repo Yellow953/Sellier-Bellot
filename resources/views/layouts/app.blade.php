@@ -24,12 +24,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/app-lite.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/core/menu/menu-types/vertical-menu.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/core/colors/palette-gradient.css') }}">
 
 </head>
 
-<body class="vertical-layout vertical-menu 2-columns menu-expanded fixed-navbar" data-open="click"
-    data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
+<body class="vertical-layout vertical-menu 2-columns menu-expanded fixed-navbar">
 
     @include('layouts._header')
 
@@ -37,8 +35,6 @@
 
     <div class="app-content content">
         <div class="content-wrapper">
-            <div class="content-wrapper-before"></div>
-
             @include('layouts._breadcrumb')
 
             <div class="content-body">

@@ -10,7 +10,8 @@
                 <h4 class="card-title">Actions</h4>
 
                 <div class="d-flex align-items-center">
-                    <a href="{{ route('users.new') }}" class="btn btn-primary">Create User</a>
+                    <a href="#" class="btn btn-secondary ml-1">Filter</a>
+                    <a href="{{ route('users.new') }}" class="btn btn-info ml-1">New User</a>
                 </div>
             </div>
         </div>
@@ -34,36 +35,28 @@
                     <table class="table table-bordered mb-0">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($users as $user)
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <th>{{ ucwords($user->name) }}</th>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ ucwords($user->role) }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <a href="{{ route('users.edit', $user->id) }}"
+                                            class="btn btn-warning btn-sm ml-1"><i class="la la-pencil-square"></i></a>
+                                        <a href="{{ route('users.destroy', $user->id) }}"
+                                            class="btn btn-danger btn-sm ml-1"><i class="la la-trash"></i></a>
+                                    </div>
+                                </td>
                             </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@TwBootstrap</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
