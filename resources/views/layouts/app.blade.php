@@ -10,7 +10,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Sellier & Bellot') }}</title>
+    <title>Sellier & Bellot</title>
+
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo.png') }}" type="image/x-icon">
 
     <!-- Fonts -->
     <link
@@ -33,7 +35,21 @@
 
     @include('layouts._sidenav')
 
-    @yield('content')
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-wrapper-before"></div>
+
+            @include('layouts._breadcrumb')
+
+            <div class="content-body">
+                @include('layouts._flash')
+
+                @yield('content')
+            </div>
+        </div>
+    </div>
+
+    @include('layouts._footer')
 
     <!-- Theme JS-->
     <script src="{{ asset('assets/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
