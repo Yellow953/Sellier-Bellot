@@ -11,29 +11,29 @@
     </div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item"><a href="{{ route('home') }}"><i class="ft-home"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('home') }}"><i class="la-dashboard"></i><span class="menu-title"
                         data-i18n="">Dashboard</span></a>
             </li>
-            <li class=" nav-item"><a href="charts.html"><i class="ft-pie-chart"></i><span class="menu-title"
-                        data-i18n="">Charts</span></a>
+            <li class="nav-item"><a href="{{ route('users') }}"><i class="la-users"></i><span class="menu-title"
+                        data-i18n="">Users</span></a>
             </li>
-            <li class=" nav-item"><a href="icons.html"><i class="ft-droplet"></i><span class="menu-title"
-                        data-i18n="">Icons</span></a>
+            <li class="nav-item"><a href="{{ route('customers') }}"><i class="la-group"></i><span class="menu-title"
+                        data-i18n="">Customers</span></a>
             </li>
-            <li class=" nav-item"><a href="cards.html"><i class="ft-layers"></i><span class="menu-title"
-                        data-i18n="">Cards</span></a>
+            <li class="nav-item"><a href="{{ route('guns') }}"><i class="la-crosshairs"></i><span class="menu-title"
+                        data-i18n="">Guns</span></a>
             </li>
-            <li class=" nav-item"><a href="buttons.html"><i class="ft-box"></i><span class="menu-title"
-                        data-i18n="">Buttons</span></a>
+            <li class="nav-item"><a href="{{ route('corridors') }}"><i class="ft-home"></i><span class="menu-title"
+                        data-i18n="">Corridors</span></a>
             </li>
-            <li class=" nav-item"><a href="typography.html"><i class="ft-bold"></i><span class="menu-title"
-                        data-i18n="">Typography</span></a>
+            <li class="nav-item"><a href="{{ route('calibers') }}"><i class="ft-home"></i><span class="menu-title"
+                        data-i18n="">Calibers</span></a>
             </li>
-            <li class="active"><a href="tables.html"><i class="ft-credit-card"></i><span class="menu-title"
-                        data-i18n="">Tables</span></a>
+            <li class="nav-item"><a href="{{ route('transactions') }}"><i class="ft-home"></i><span class="menu-title"
+                        data-i18n="">Transactions</span></a>
             </li>
-            <li class=" nav-item"><a href="form-elements.html"><i class="ft-layout"></i><span class="menu-title"
-                        data-i18n="">Form Elements</span></a>
+            <li class="nav-item"><a href="{{ route('logs') }}"><i class="ft-home"></i><span class="menu-title"
+                        data-i18n="">Logs</span></a>
             </li>
         </ul>
     </div>
