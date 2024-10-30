@@ -92,5 +92,6 @@ Route::middleware(['auth'])->group(function () {
     // Logs
     Route::get('/logs', [App\Http\Controllers\LogController::class, 'index'])->name('logs');
 
+    Route::get('/custom_logout', [App\Http\Controllers\HomeController::class, 'custom_logout'])->name('custom_logout');
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
