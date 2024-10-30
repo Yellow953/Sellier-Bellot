@@ -11,28 +11,28 @@
     </div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item"><a href="{{ route('home') }}"><i class="la-dashboard"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('home') }}"><i class="la la-dashboard"></i><span class="menu-title"
                         data-i18n="">Dashboard</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('users') }}"><i class="la-users"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('users') }}"><i class="la la-user"></i><span class="menu-title"
                         data-i18n="">Users</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('customers') }}"><i class="la-group"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('customers') }}"><i class="la la-group"></i><span class="menu-title"
                         data-i18n="">Customers</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('guns') }}"><i class="la-crosshairs"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('guns') }}"><i class="la la-crosshairs"></i><span class="menu-title"
                         data-i18n="">Guns</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('corridors') }}"><i class="ft-home"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('corridors') }}"><i class="la la-bullseye"></i><span class="menu-title"
                         data-i18n="">Corridors</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('calibers') }}"><i class="ft-home"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('calibers') }}"><i class="la la-send-o"></i><span class="menu-title"
                         data-i18n="">Calibers</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('transactions') }}"><i class="ft-home"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('transactions') }}"><i class="la la-exchange"></i><span class="menu-title"
                         data-i18n="">Transactions</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('logs') }}"><i class="ft-home"></i><span class="menu-title"
+            <li class="nav-item"><a href="{{ route('logs') }}"><i class="la la-credit-card"></i><span class="menu-title"
                         data-i18n="">Logs</span></a>
             </li>
         </ul>
