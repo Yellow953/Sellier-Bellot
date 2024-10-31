@@ -4987,12 +4987,7 @@ input[type="button"].btn-block {
     border-color: transparent;
     background-color: transparent;
 }
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-item.show .nav-link {
-    color: #fff;
-    border-color: #babfc7 #626e82 #6967ce;
-    background-color: #6967ce;
-}
+
 .nav-tabs .dropdown-menu {
     margin-top: 0;
 
@@ -5004,11 +4999,7 @@ input[type="button"].btn-block {
     border-radius: 0.25rem;
 }
 
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #6967ce;
-}
+
 
 .nav-fill .nav-item {
     text-align: center;
