@@ -9,7 +9,7 @@ class LogController extends Controller
 {
     public function index()
     {
-        $logs = Log::select('text')->filter()->latest()->paginate(25);
+        $logs = Log::select('text','created_at')->filter()->latest()->paginate(25);
         return view('logs.index', compact('logs'));
     }
 }
