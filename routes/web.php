@@ -76,9 +76,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Profile
-    Route::prefix('users')->group(function () {
-        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::prefix('profile')->group(function () {
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/save_password', [ProfileController::class, 'save_password'])->name('profile.save_password');
     });
 
     // Logs

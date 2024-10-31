@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -38,7 +39,7 @@ class ProfileController extends Controller
     public function save_password(Request $request)
     {
         $request->validate([
-            'new_password' => 'required|max:255|confirmed',
+            'new_password' => 'required|min:8|max:255|confirmed',
         ]);
 
         $user = auth()->user();
