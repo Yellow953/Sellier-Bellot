@@ -103,20 +103,21 @@ $auth_user = auth()->user();
 
                     <div class="form-group">
                         <label for="name">User Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
-                            value="{{ request('name') }}">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name..."
+                            value="{{ request()->query('name') }}">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter email"
-                            value="{{ request('email') }}">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email..."
+                            value="{{ request()->query('email') }}">
                     </div>
                     <div class="form-group">
                         <label for="userRole">Role</label>
                         <select class="form-control" name="role" id="userRole">
                             <option value="">Select Role</option>
-                            <option value="admin" {{ request('role')=='admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="user" {{ request('role')=='user' ? 'selected' : '' }}>User</option>
+                            <option value="admin" {{ request()->query('role')=='admin' ? 'selected' : '' }}>Admin
+                            </option>
+                            <option value="user" {{ request()->query('role')=='user' ? 'selected' : '' }}>User</option>
                         </select>
                     </div>
                 </form>
