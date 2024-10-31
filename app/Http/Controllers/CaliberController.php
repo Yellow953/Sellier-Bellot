@@ -15,7 +15,7 @@ class CaliberController extends Controller
 
     public function index()
     {
-        $calibers = Caliber::select('id', 'name', 'make', 'rental_price')->filter()->latest()->paginate(25);
+        $calibers = Caliber::select('id', 'name', 'make', 'price')->filter()->latest()->paginate(25);
         return view('calibers.index', compact('calibers'));
     }
 
@@ -29,13 +29,13 @@ class CaliberController extends Controller
         $request->validate([
             'name' => 'required|unique:calibers,name',
             'make' => 'required',
-            'rental_price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0'
         ]);
 
         Caliber::create([
             'name' => $request->name,
             'make' => $request->make,
-            'rental_price' => $request->rental_price
+            'price' => $request->price
         ]);
 
         $text = ucwords(auth()->user()->name) .  " created Caliber: " . $request->name . ", datetime: " . now();
@@ -54,13 +54,13 @@ class CaliberController extends Controller
         $request->validate([
             'name' => 'required',
             'make' => 'required',
-            'rental_price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0',
         ]);
 
         $caliber->update([
             'name' => $request->name,
             'make' => $request->make,
-            'rental_price' => $request->rental_price
+            'price' => $request->price
         ]);
 
         $text = ucwords(auth()->user()->name) .  " updated Caliber: " . $caliber->name . ", datetime: " . now();

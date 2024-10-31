@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('corridors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->double('rental_price');
+            $table->double('price');
             $table->timestamps();
         });
     }

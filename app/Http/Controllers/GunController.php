@@ -15,7 +15,7 @@ class GunController extends Controller
 
     public function index()
     {
-        $guns = Gun::select('id', 'name', 'make', 'rental_price')->filter()->latest()->paginate(25);
+        $guns = Gun::select('id', 'name', 'make', 'price')->filter()->latest()->paginate(25);
         return view('guns.index', compact('guns'));
     }
 
@@ -29,13 +29,13 @@ class GunController extends Controller
         $request->validate([
             'name' => 'required|unique:guns,name',
             'make' => 'required',
-            'rental_price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0'
         ]);
 
         Gun::create([
             'name' => $request->name,
             'make' => $request->make,
-            'rental_price' => $request->rental_price
+            'price' => $request->price
         ]);
 
         $text = ucwords(auth()->user()->name) .  " created Gun: " . $request->name . ", datetime: " . now();
@@ -54,13 +54,13 @@ class GunController extends Controller
         $request->validate([
             'name' => 'required',
             'make' => 'required',
-            'rental_price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0',
         ]);
 
         $gun->update([
             'name' => $request->name,
             'make' => $request->make,
-            'rental_price' => $request->rental_price
+            'price' => $request->price
         ]);
 
         $text = ucwords(auth()->user()->name) .  " updated Gun: " . $gun->name . ", datetime: " . now();

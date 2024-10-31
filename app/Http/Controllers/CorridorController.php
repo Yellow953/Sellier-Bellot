@@ -15,7 +15,7 @@ class CorridorController extends Controller
 
     public function index()
     {
-        $corridors = Corridor::select('id', 'name', 'rental_price')->filter()->latest()->paginate(25);
+        $corridors = Corridor::select('id', 'name', 'price')->filter()->latest()->paginate(25);
         return view('corridors.index', compact('corridors'));
     }
 
@@ -28,12 +28,12 @@ class CorridorController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:corridors,name',
-            'rental_price' => 'required|numeric|min:0'
+            'price' => 'required|numeric|min:0'
         ]);
 
         Corridor::create([
             'name' => $request->name,
-            'rental_price' => $request->rental_price
+            'price' => $request->price
         ]);
 
         $text = ucwords(auth()->user()->name) .  " created Corridor: " . $request->name . ", datetime: " . now();
@@ -51,12 +51,12 @@ class CorridorController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'rental_price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0',
         ]);
 
         $corridor->update([
             'name' => $request->name,
-            'rental_price' => $request->rental_price
+            'price' => $request->price
         ]);
 
         $text = ucwords(auth()->user()->name) .  " updated Corridor: " . $corridor->name . ", datetime: " . now();

@@ -8,4 +8,9 @@ class Helper
     {
         return ['admin', 'user'];
     }
+
+    public static function get_sources()
+    {
+        return ['Self', 'Club'];
+    }
 }

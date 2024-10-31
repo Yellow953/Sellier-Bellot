@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('make');
-            $table->double('rental_price');
+            $table->double('price');
             $table->timestamps();
         });
     }

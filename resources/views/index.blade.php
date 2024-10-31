@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <!-- Customer Search Section -->
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Customers</h4>
@@ -21,10 +21,16 @@
                     <div class="customers_list" id="customers_list"></div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">New Customer? <a href="{{ route('customers.new') }}">Create</a></h4>
+                </div>
+            </div>
         </div>
 
         <!-- Transaction Form Section -->
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-body" id="transaction_form_container">
                     Please Choose a Customer ...

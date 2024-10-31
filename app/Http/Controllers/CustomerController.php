@@ -87,7 +87,7 @@ class CustomerController extends Controller
 
     public function fetch(Request $request)
     {
-        $search = $request->query('customers_search');
+        $search = $request->query('search');
 
         $customers = Customer::where('name', 'like', "%{$search}%")
             ->orWhere('phone', 'like', "%{$search}%")->get();
