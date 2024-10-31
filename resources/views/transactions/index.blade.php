@@ -103,23 +103,36 @@ $customers = Helper::get_customers();
                     @csrf
 
                     <div class="form-group">
-                        <label for="name">User Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
-                            value="{{ request('name') }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email" placeholder="Enter email"
-                            value="{{ request('email') }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="userRole">Role</label>
-                        <select class="form-control" name="role" id="userRole">
-                            <option value="">Select Role</option>
-                            <option value="admin" {{ request('role')=='admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="user" {{ request('role')=='user' ? 'selected' : '' }}>User</option>
+                        <label for="user_id">User</label>
+                        <select class="form-control" name="user_id" id="user_id">
+                            <option value="">Select User</option>
+                            @foreach ($users as $user)
+                            <option value="{{ $user->id }}" {{ request()->query('user_id')==$user->id ? 'selected' : ''
+                                }}>{{
+                                ucwords($user->name) }}</option>
+                            @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="customer_id">Customer</label>
+                        <select class="form-control" name="customer_id" id="customer_id">
+                            <option value="">Select Customer</option>
+                            @foreach ($customers as $customer)
+                            <option value="{{ $customer->id }}" {{ request()->query('customer_id')==$customer->id ?
+                                'selected' : ''
+                                }}>{{
+                                ucwords($customer->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transaction_date">Transaction Date</label>
+                        <input type="date" class="form-control" name="transaction_date" id="transaction_date"
+                            value="{{ request()->query('transaction_date') }}">
+                    </div>
+
                 </form>
 
             </div>

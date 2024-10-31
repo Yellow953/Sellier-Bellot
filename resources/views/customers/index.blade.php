@@ -14,7 +14,7 @@ $auth_user = auth()->user();
                 <h4 class="card-title">Actions</h4>
 
                 <div class="d-flex align-items-center">
-                    <a href="#" class="btn btn-secondary ml-1">Filter</a>
+                    <a href="#" class="btn btn-secondary ml-1" data-toggle="modal" data-target="#filterModal">Filter</a>
                     <a href="{{ route('customers.new') }}" class="btn btn-info ml-1">New Customer</a>
                 </div>
             </div>
@@ -81,6 +81,48 @@ $auth_user = auth()->user();
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">Filter Customers</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="filterForm" action="{{ route('customers') }}" method="GET" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"
+                            value="{{ request('name') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" class="form-control" name="phone" id="phone"
+                            placeholder="Enter Phone Number..." value="{{ request()->query('phone') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" name="address" id="address"
+                            placeholder="Enter Address..." value="{{ request()->query('address') }}">
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
+            </div>
+
         </div>
     </div>
 </div>
