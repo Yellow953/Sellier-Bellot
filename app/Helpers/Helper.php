@@ -4,8 +4,8 @@ namespace App\Helpers;
 
 class Helper
 {
-    public static function get_muliple_select_routes()
+    public static function get_user_roles()
     {
-        return ['categories'];
+        return ['admin', 'user'];
     }
 }

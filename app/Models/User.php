@@ -42,26 +42,26 @@ class User extends Authenticatable
         return $this->transactions->count() == 0 && auth()->user()->role == 'admin';
     }
 
-     // Filter
-     public function scopeFilter($q)
-     {
-         if (request('name')) {
-             $name = request('name');
-             $q->where('name', 'LIKE', "%{$name}%");
-         }
-         if (request('email')) {
-             $email = request('email');
-             $q->where('email', 'LIKE', "%{$email}%");
-         }
-         if (request('phone')) {
-             $phone = request('phone');
-             $q->where('phone', 'LIKE', "%{$phone}%");
-         }
-         if (request('role')) {
-             $role = request('role');
-             $q->where('role', $role);
-         }
+    // Filter
+    public function scopeFilter($q)
+    {
+        if (request('name')) {
+            $name = request('name');
+            $q->where('name', 'LIKE', "%{$name}%");
+        }
+        if (request('email')) {
+            $email = request('email');
+            $q->where('email', 'LIKE', "%{$email}%");
+        }
+        if (request('phone')) {
+            $phone = request('phone');
+            $q->where('phone', 'LIKE', "%{$phone}%");
+        }
+        if (request('role')) {
+            $role = request('role');
+            $q->where('role', $role);
+        }
 
-         return $q;
-     }
+        return $q;
+    }
 }

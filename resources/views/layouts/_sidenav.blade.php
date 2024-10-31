@@ -1,5 +1,4 @@
-<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true"
-    data-img="theme-assets/images/backgrounds/02.jpg">
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow">
     <div class="navbar-header">
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto"><a class="navbar-brand" href="{{ route('home') }}"><img class="brand-logo"
@@ -23,14 +22,14 @@
             <li class="nav-item"><a href="{{ route('guns') }}"><i class="la la-crosshairs"></i><span class="menu-title"
                         data-i18n="">Guns</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('corridors') }}"><i class="la la-bullseye"></i><span class="menu-title"
-                        data-i18n="">Corridors</span></a>
+            <li class="nav-item"><a href="{{ route('corridors') }}"><i class="la la-bullseye"></i><span
+                        class="menu-title" data-i18n="">Corridors</span></a>
             </li>
             <li class="nav-item"><a href="{{ route('calibers') }}"><i class="la la-send-o"></i><span class="menu-title"
                         data-i18n="">Calibers</span></a>
             </li>
-            <li class="nav-item"><a href="{{ route('transactions') }}"><i class="la la-exchange"></i><span class="menu-title"
-                        data-i18n="">Transactions</span></a>
+            <li class="nav-item"><a href="{{ route('transactions') }}"><i class="la la-exchange"></i><span
+                        class="menu-title" data-i18n="">Transactions</span></a>
             </li>
             <li class="nav-item"><a href="{{ route('logs') }}"><i class="la la-credit-card"></i><span class="menu-title"
                         data-i18n="">Logs</span></a>

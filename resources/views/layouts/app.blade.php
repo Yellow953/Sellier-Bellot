@@ -52,6 +52,12 @@
     <script src="{{ asset('assets/js/core/app-menu-lite.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/core/app-lite.js') }}" type="text/javascript"></script>
 
+    {{-- sweetalert --}}
+    <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+
+    {{-- custom --}}
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+
 </body>
 
 </html>
