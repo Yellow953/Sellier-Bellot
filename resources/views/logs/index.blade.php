@@ -32,17 +32,10 @@
             <div class="card-content collapse show">
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
-                        <thead>
-                            <tr>
-                                <th>Log Message</th>
-
-                            </tr>
-                        </thead>
                         <tbody>
                             @forelse ($logs as $log)
                             <tr>
                                 <td>{{ $log->text }}</td>
-
                             </tr>
                             @empty
                             <tr>
@@ -54,9 +47,9 @@
                             <tr>
                                 <td colspan="2">
                                     {{ $logs->appends([
-                                        'name' => request()->query('name'),
-                                        'email' => request()->query('email'),
-                                        'role' => request()->query('role')
+                                    'text' => request()->query('text'),
+                                    'startDate' => request()->query('startDate'),
+                                    'endDate' => request()->query('endDate')
                                     ])->links() }}
                                 </td>
                             </tr>
@@ -78,30 +71,32 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-           <!-- logs.blade.php -->
-<div class="modal-body">
-    <form id="filterForm" action="{{ route('logs') }}" method="GET">
-        <div class="form-group">
-            <label for="text">Log Message</label>
-            <input type="text" class="form-control" name="text" id="text" placeholder="Search log message"
-                   value="{{ request('text') }}">
-        </div>
-        <div class="form-group">
-            <label for="startDate">Start Date</label>
-            <input type="date" class="form-control" name="startDate" id="startDate"
-                   value="{{ request('startDate') }}">
-        </div>
-        <div class="form-group">
-            <label for="endDate">End Date</label>
-            <input type="date" class="form-control" name="endDate" id="endDate"
-                   value="{{ request('endDate') }}">
-        </div>
-    </form>
-</div>
+            <div class="modal-body">
+                <form id="filterForm" action="{{ route('logs') }}" method="GET" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="form-group">
+                        <label for="text">Text</label>
+                        <input type="text" class="form-control" name="text" id="text" placeholder="Search log message"
+                            value="{{ request()->query('text') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" class="form-control" name="startDate" id="startDate"
+                            value="{{ request()->query('startDate') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" class="form-control" name="endDate" id="endDate"
+                            value="{{ request()->query('endDate') }}">
+                    </div>
+                </form>
+            </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
             </div>
         </div>
     </div>

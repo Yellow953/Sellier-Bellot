@@ -70,12 +70,12 @@ $customers = Helper::get_customers();
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4">No Transactions yet ...</td>
+                                <td colspan="5">No Transactions yet ...</td>
                             </tr>
                             @endforelse
 
                             <tr>
-                                <td colspan="4">{{ $transactions->appends(['user_id' => request()->query('user_id'),
+                                <td colspan="5">{{ $transactions->appends(['user_id' => request()->query('user_id'),
                                     'customer_id' =>
                                     request()->query('customer_id'), 'transaction_date' =>
                                     request()->query('transaction_date')])->links() }}</td>
