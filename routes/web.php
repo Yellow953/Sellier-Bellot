@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CaliberController;
+use App\Http\Controllers\CorridorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GunController;
 use App\Http\Controllers\ProfileController;
@@ -57,12 +58,12 @@ Route::middleware(['auth'])->group(function () {
 
     // Corridors
     Route::prefix('corridors')->group(function () {
-        Route::get('/', [GunController::class, 'index'])->name('corridors');
-        Route::get('/new', [GunController::class, 'new'])->name('corridors.new');
-        Route::post('/create', [GunController::class, 'create'])->name('corridors.create');
-        Route::get('/edit/{corridor}', [GunController::class, 'edit'])->name('corridors.edit');
-        Route::post('/update/{corridor}', [GunController::class, 'update'])->name('corridors.update');
-        Route::get('/delete/{corridor}', [GunController::class, 'destroy'])->name('corridors.destroy');
+        Route::get('/', [CorridorController::class, 'index'])->name('corridors');
+        Route::get('/new', [CorridorController::class, 'new'])->name('corridors.new');
+        Route::post('/create', [CorridorController::class, 'create'])->name('corridors.create');
+        Route::get('/edit/{corridor}', [CorridorController::class, 'edit'])->name('corridors.edit');
+        Route::post('/update/{corridor}', [CorridorController::class, 'update'])->name('corridors.update');
+        Route::get('/delete/{corridor}', [CorridorController::class, 'destroy'])->name('corridors.destroy');
     });
 
     // Transactions

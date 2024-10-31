@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Calibers')
-
+@php
+$auth_user = auth()->user();
+@endphp
 @section('content')
 <div class="row">
     <div class="col-12">

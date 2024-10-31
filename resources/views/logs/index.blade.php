@@ -78,20 +78,27 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form id="filterForm" action="{{ route('logs') }}" method="GET">
-                    <div class="form-group">
-                        <label for="text">Log Message</label>
-                        <input type="text" class="form-control" name="text" id="text" placeholder="Search log message"
-                            value="{{ request('text') }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="date">Date</label>
-                        <input type="date" class="form-control" name="date" id="date"
-                            value="{{ request('date') }}">
-                    </div>
-                </form>
-            </div>
+           <!-- logs.blade.php -->
+<div class="modal-body">
+    <form id="filterForm" action="{{ route('logs') }}" method="GET">
+        <div class="form-group">
+            <label for="text">Log Message</label>
+            <input type="text" class="form-control" name="text" id="text" placeholder="Search log message"
+                   value="{{ request('text') }}">
+        </div>
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" class="form-control" name="startDate" id="startDate"
+                   value="{{ request('startDate') }}">
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" class="form-control" name="endDate" id="endDate"
+                   value="{{ request('endDate') }}">
+        </div>
+    </form>
+</div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
