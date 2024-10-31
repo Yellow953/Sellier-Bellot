@@ -68,10 +68,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('transactions')->group(function () {
         Route::get('/', [TransactionController::class, 'index'])->name('transactions');
         Route::get('/fetch_options', [TransactionController::class, 'fetch_options'])->name('transactions.fetch_options');
-        Route::get('/new', [TransactionController::class, 'new'])->name('transactions.new');
         Route::post('/create', [TransactionController::class, 'create'])->name('transactions.create');
-        Route::get('/edit/{transaction}', [TransactionController::class, 'edit'])->name('transactions.edit');
-        Route::post('/update/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
+        Route::get('/show/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
         Route::get('/delete/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
     });
 

@@ -25,7 +25,7 @@ class Transaction extends Model
 
     public function can_delete()
     {
-        return $this->items->count() == 0  && auth()->user()->role == 'admin';
+        return auth()->user()->role == 'admin';
     }
 
     // Filter

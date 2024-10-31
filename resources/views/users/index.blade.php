@@ -14,7 +14,6 @@ $auth_user = auth()->user();
                 <h4 class="card-title">Actions</h4>
 
                 <div class="d-flex align-items-center">
-                    <!-- Filter Button to trigger modal -->
                     <a href="#" class="btn btn-secondary ml-1" data-toggle="modal" data-target="#filterModal">Filter</a>
                     <a href="{{ route('users.new') }}" class="btn btn-info ml-1">New User</a>
                 </div>
@@ -88,7 +87,6 @@ $auth_user = auth()->user();
     </div>
 </div>
 
-<!-- Filter Modal -->
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -100,8 +98,9 @@ $auth_user = auth()->user();
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Modal content, such as form fields for filtering users, goes here -->
-                <form id="filterForm" action="{{ route('users') }}" method="GET">
+                <form id="filterForm" action="{{ route('users') }}" method="GET" enctype="multipart/form-data">
+                    @csrf
+
                     <div class="form-group">
                         <label for="name">User Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter name"

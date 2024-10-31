@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Caliber;
 use App\Models\Corridor;
 use App\Models\Gun;
+use App\Models\Log;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::select('id', 'user_id', 'customer_id', 'gun_source', 'ammo_source')->filter()->latest()->paginate(25);
+        $transactions = Transaction::select('id', 'user_id', 'customer_id', 'transaction_date')->filter()->latest()->paginate(25);
         return view('transactions.index', compact('transactions'));
     }
 
@@ -87,6 +88,9 @@ class TransactionController extends Controller
                 }
             }
 
+            $text = ucwords(auth()->user()->name) .  " created Transaction: " . $transaction->id . ", datetime: " . now();
+            Log::create(['text' => $text]);
+
             DB::commit();
 
             return redirect()->back()->with('success', 'Transaction created successfully.');
@@ -96,7 +100,29 @@ class TransactionController extends Controller
         }
     }
 
-    public function destroy(Transaction $transaction) {}
+    public function destroy(Transaction $transaction)
+    {
+        if ($transaction->can_delete()) {
+            foreach ($transaction->items as $item) {
+                $item->delete();
+            }
+
+            $text = ucwords(auth()->user()->name) .  " deleted Transaction: " . $transaction->id . ", datetime: " . now();
+
+            $transaction->delete();
+
+            Log::create(['text' => $text]);
+
+            return redirect()->back()->with('danger', 'Transaction was successfully deleted');
+        } else {
+            return redirect()->back()->with('danger', 'Unable to delete');
+        }
+    }
+
+    public function show(Transaction $transaction)
+    {
+        return view('transactions.show', compact('transaction'));
+    }
 
     public function fetch_options(Request $request)
     {
