@@ -84,4 +84,14 @@ class CustomerController extends Controller
             return redirect()->back()->with('danger', 'Unable to delete');
         }
     }
+
+    public function fetch(Request $request)
+    {
+        $search = $request->query('customers_search');
+
+        $customers = Customer::where('name', 'like', "%{$search}%")
+            ->orWhere('phone', 'like', "%{$search}%")->get();
+
+        return response()->json($customers);
+    }
 }

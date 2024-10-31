@@ -26,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
     // Customers
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('customers');
+        Route::get('/fetch', [CustomerController::class, 'fetch'])->name('customers.fetch');
         Route::get('/new', [CustomerController::class, 'new'])->name('customers.new');
         Route::post('/create', [CustomerController::class, 'create'])->name('customers.create');
         Route::get('/edit/{customer}', [CustomerController::class, 'edit'])->name('customers.edit');

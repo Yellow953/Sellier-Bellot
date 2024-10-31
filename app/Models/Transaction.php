@@ -39,10 +39,6 @@ class Transaction extends Model
             $customer_name = request('customer_name');
             $q->where('customer_name', 'LIKE', "%{$customer_name}%");
         }
-        if (request('customer_address')) {
-            $customer_address = request('customer_address');
-            $q->where('customer_address', 'LIKE', "%{$customer_address}%");
-        }
         if (request('customer_phone')) {
             $customer_phone = request('customer_phone');
             $q->where('customer_phone', $customer_phone);
