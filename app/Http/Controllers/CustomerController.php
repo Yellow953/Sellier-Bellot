@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Log;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CustomerController extends Controller
 {
@@ -93,5 +94,16 @@ class CustomerController extends Controller
             ->orWhere('phone', 'like', "%{$search}%")->get();
 
         return response()->json($customers);
+    }
+
+    public function download(Customer $customer)
+    {
+        $filePath = public_path($customer->id_scan);
+
+        if (File::exists($filePath)) {
+            return response()->download($filePath, "ID_Scan_{$customer->name}.jpg");
+        }
+
+        return redirect()->back()->with('error', 'Identification scan not found.');
     }
 }

@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit/{customer}', [CustomerController::class, 'edit'])->name('customers.edit');
         Route::post('/update/{customer}', [CustomerController::class, 'update'])->name('customers.update');
         Route::get('/delete/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+        Route::get('/download/{customer}', [CustomerController::class, 'download'])->name('customers.download');
     });
 
     // Guns
