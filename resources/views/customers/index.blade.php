@@ -53,6 +53,9 @@ $auth_user = auth()->user();
                                 <td>{{ $customer->address }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
+                                        <a href="{{ route('customers.download', $customer->id) }}"
+                                            class="btn btn-info btn-sm ml-1"><i class="la la-download"></i></a>
+
                                         @if ($auth_user->role == 'admin')
                                         <a href="{{ route('customers.edit', $customer->id) }}"
                                             class="btn btn-warning btn-sm ml-1"><i class="la la-pencil-square"></i></a>

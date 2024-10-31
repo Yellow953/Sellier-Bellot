@@ -20,14 +20,4 @@ class HomeController extends Controller
 
         return redirect('login');
     }
-
-    public function download($path)
-    {
-        $path = public_path($path);
-        if (file_exists($path)) {
-            return response()->download($path);
-        } else {
-            return response()->json(['error' => 'File not found.'], 404);
-        }
-    }
 }
