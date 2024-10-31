@@ -10,4 +10,9 @@ class TransactionController extends Controller
     {
         $this->middleware('admin')->only(['edit', 'update', 'destroy']);
     }
+
+    public function index()
+    {
+
+    }
 }
