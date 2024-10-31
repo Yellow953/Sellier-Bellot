@@ -35,13 +35,13 @@ class Transaction extends Model
             $transaction_date = request('transaction_date');
             $q->where('transaction_date', 'LIKE', "%{$transaction_date}%");
         }
-        if (request('customer_name')) {
-            $customer_name = request('customer_name');
-            $q->where('customer_name', 'LIKE', "%{$customer_name}%");
+        if (request('user_id')) {
+            $user_id = request('user_id');
+            $q->where('user_id', $user_id);
         }
-        if (request('customer_phone')) {
-            $customer_phone = request('customer_phone');
-            $q->where('customer_phone', $customer_phone);
+        if (request('customer_id')) {
+            $customer_id = request('customer_id');
+            $q->where('customer_id', $customer_id);
         }
         if (request('gun_source')) {
             $gun_source = request('gun_source');

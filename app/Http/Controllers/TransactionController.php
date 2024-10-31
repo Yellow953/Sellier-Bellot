@@ -6,7 +6,9 @@ use App\Models\Caliber;
 use App\Models\Corridor;
 use App\Models\Gun;
 use App\Models\Transaction;
+use App\Models\TransactionItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -21,7 +23,78 @@ class TransactionController extends Controller
         return view('transactions.index', compact('transactions'));
     }
 
-    public function create(Request $request) {}
+    public function create(Request $request)
+    {
+        $request->validate([
+            'customer_id' => 'required|exists:customers,id',
+            'user_id' => 'required|exists:users,id',
+            'transaction_date' => 'required|date',
+            'gun_source' => 'required|string',
+            'ammo_source' => 'required|string',
+            'item_type' => 'required|array',
+            'specific_item' => 'required|array',
+            'quantity' => 'required|array',
+            'unit_price' => 'required|array',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $transaction = Transaction::create([
+                'user_id' => $request->user_id,
+                'customer_id' => $request->customer_id,
+                'transaction_date' => $request->transaction_date,
+                'gun_source' => $request->gun_source,
+                'ammo_source' => $request->ammo_source,
+            ]);
+
+            foreach ($request->item_type as $index => $itemType) {
+                switch ($itemType) {
+                    case 'corridor':
+                        TransactionItem::create([
+                            'transaction_id' => $transaction->id,
+                            'type' => $itemType,
+                            'corridor_id' => $request->specific_item[$index],
+                            'quantity' => $request->quantity[$index],
+                            'unit_price' => $request->unit_price[$index],
+                            'total_price' => $request->quantity[$index] * $request->unit_price[$index],
+                        ]);
+                        break;
+                    case 'gun':
+                        TransactionItem::create([
+                            'transaction_id' => $transaction->id,
+                            'type' => $itemType,
+                            'gun_id' => $request->specific_item[$index],
+                            'quantity' => $request->quantity[$index],
+                            'unit_price' => $request->unit_price[$index],
+                            'total_price' => $request->quantity[$index] * $request->unit_price[$index],
+                        ]);
+                        break;
+                    case 'caliber':
+                        TransactionItem::create([
+                            'transaction_id' => $transaction->id,
+                            'type' => $itemType,
+                            'caliber_id' => $request->specific_item[$index],
+                            'quantity' => $request->quantity[$index],
+                            'unit_price' => $request->unit_price[$index],
+                            'total_price' => $request->quantity[$index] * $request->unit_price[$index],
+                        ]);
+                        break;
+
+                    default:
+
+                        break;
+                }
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Transaction created successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Failed to create transaction. Please try again.']);
+        }
+    }
 
     public function destroy(Transaction $transaction) {}
 

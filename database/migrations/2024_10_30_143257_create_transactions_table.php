@@ -13,9 +13,6 @@ return new class extends Migration
             $table->dateTime('transaction_date');
             $table->bigInteger("user_id")->unsigned();
             $table->bigInteger('customer_id')->unsigned();
-            $table->string('customer_name');
-            $table->string('customer_phone');
-            $table->string('verification');
             $table->string('gun_source');
             $table->string('ammo_source');
             $table->timestamps();

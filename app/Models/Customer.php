@@ -14,7 +14,7 @@ class Customer extends Model
     }
     public function can_delete()
     {
-        return $this->transactions->count() == 0 && auth()->user->role == 'admin';
+        return $this->transactions->count() == 0 && auth()->user()->role == 'admin';
     }
     // Filter
     public function scopeFilter($q)
