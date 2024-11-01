@@ -27,7 +27,6 @@ Route::middleware(['auth'])->group(function () {
     // Customers
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class, 'index'])->name('customers');
-        Route::get('/fetch', [CustomerController::class, 'fetch'])->name('customers.fetch');
         Route::get('/new', [CustomerController::class, 'new'])->name('customers.new');
         Route::post('/create', [CustomerController::class, 'create'])->name('customers.create');
         Route::get('/edit/{customer}', [CustomerController::class, 'edit'])->name('customers.edit');
@@ -69,7 +68,6 @@ Route::middleware(['auth'])->group(function () {
     // Transactions
     Route::prefix('transactions')->group(function () {
         Route::get('/', [TransactionController::class, 'index'])->name('transactions');
-        Route::get('/fetch_options', [TransactionController::class, 'fetch_options'])->name('transactions.fetch_options');
         Route::post('/create', [TransactionController::class, 'create'])->name('transactions.create');
         Route::get('/show/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
         Route::get('/delete/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
@@ -88,3 +86,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/custom_logout', [App\Http\Controllers\HomeController::class, 'custom_logout'])->name('custom_logout');
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
+
+Route::get('/customers/fetch', [CustomerController::class, 'fetch'])->name('customers.fetch');
+Route::get('/transactions/fetch_options', [TransactionController::class, 'fetch_options'])->name('transactions.fetch_options');

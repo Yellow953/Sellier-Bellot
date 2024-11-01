@@ -24,9 +24,17 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/app-lite.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/core/menu/menu-types/vertical-menu.css') }}">
+
     <style>
-        .nav-link:hover, .nav-link:active{
-            color: grey!important;
+        .nav-link:hover,
+        .nav-link:active {
+            color: grey !important;
+        }
+
+        .customers_list {
+            max-height: 35vh;
+            overflow-y: auto;
+            padding: 5px;
         }
     </style>
 

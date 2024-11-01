@@ -7,7 +7,7 @@
         const fetchCustomersUrl = @json(route('customers.fetch'));
         const fetchOptionsUrl = @json(route('transactions.fetch_options'));
 
-        fetchCustomers(''); // Load customers initially
+        fetchCustomers('');
 
         searchButton.addEventListener('click', function() {
             fetchCustomers(searchInput.value);
@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success mt-1 text-right">Submit Transaction</button>
+                    <button type="submit" class="btn btn-info mt-1">Submit Transaction</button>
                 </form>
             `;
 
@@ -157,7 +157,7 @@
                         const opt = document.createElement('option');
                         opt.value = option.id;
                         opt.textContent = option.name;
-                        opt.setAttribute('data-price', option.price); // Add price to option data
+                        opt.setAttribute('data-price', option.price);
                         specificItemSelect.appendChild(opt);
                     });
                 })
