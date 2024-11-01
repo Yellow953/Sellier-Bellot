@@ -16,7 +16,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Customer::select('id', 'name', 'phone', 'address', 'id_scan', 'gun_license_scan')->filter()->latest()->paginate(25);
+        $customers = Customer::select('id', 'name', 'phone', 'address', 'id_scan')->filter()->latest()->paginate(25);
         return view('customers.index', compact('customers'));
     }
 
@@ -31,22 +31,39 @@ class CustomerController extends Controller
             'name' => 'required',
             'phone' => 'required',
             'address' => 'required',
-            'id_scan' => 'required'
+            'scanned_images' => 'required|array',
+            'scanned_images.*' => 'string'
         ]);
+
+        $scannedImagesPaths = [];
+        foreach ($request->scanned_images as $index => $base64Image) {
+            $imageData = explode(',', $base64Image);
+            $decodedImage = base64_decode($imageData[1]);
+
+            $imageName = 'id_scan_' . time() . '_' . $index . '.jpg';
+            $path = public_path('uploads/customers/' . $imageName);
+            file_put_contents($path, $decodedImage);
+
+            $scannedImagesPaths[] = 'uploads/customers/' . $imageName;
+        }
+
+        $idScanPath = $scannedImagesPaths[0] ?? null;
+        $gunLicenseScan = $scannedImagesPaths[1] ?? null;
 
         Customer::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
-            'id_scan' => $request->id_scan,
-            'gun_lisence_scan' => $request->gun_lisence_scan,
+            'id_scan' => $idScanPath,
+            'gun_license_scan' => $gunLicenseScan,
         ]);
 
-        $text = ucwords(auth()->user()->name) .  " created Customer: " . $request->name . ", datetime: " . now();
+        $text = ucwords(auth()->user()->name) . " created Customer: " . $request->name . ", datetime: " . now();
         Log::create(['text' => $text]);
 
         return redirect()->route('customers')->with('success', 'Customer was successfully created.');
     }
+
 
     public function edit(Customer $customer)
     {
