@@ -4,7 +4,14 @@
 
 @section('content')
 
-<script type="text/javascript" src="{{ asset('assets/js/scanner.js') }}"></script>
+<style>
+    .scanned {
+        width: 150px;
+        height: 300px;
+    }
+</style>
+
+<script type="text/javascript" src="//cdn.asprise.com/scannerjs/scanner.js"></script>
 
 <div class="container">
     <div class="d-flex align-items-center justify-content-between my-2">
