@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class LogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $logs = Log::select('text')->filter()->latest()->paginate(25);

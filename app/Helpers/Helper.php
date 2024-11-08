@@ -17,6 +17,11 @@ class Helper
         return ['Self', 'Club'];
     }
 
+    public static function get_document_types()
+    {
+        return ['Personal ID', 'Passport', 'Driving License', 'Gun Permit', 'Other'];
+    }
+
     public static function get_users()
     {
         return User::select('id', 'name')->get();

@@ -11,16 +11,41 @@ class GunSeeder extends Seeder
     public function run(): void
     {
         DB::table('guns')->insert([
-            'name' => 'Desert Eagle',
-            'make' => 'Beretta',
-            'price' => 25,
+            'name' => 'Shooter',
+            'make' => '',
+            'price' => 5,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
         DB::table('guns')->insert([
-            'name' => 'AK 47',
-            'make' => 'AK',
-            'price' => 10,
+            'name' => 'Pistol',
+            'make' => '',
+            'price' => 5,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        DB::table('guns')->insert([
+            'name' => 'Gun Cleaning',
+            'make' => '',
+            'price' => 7,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        DB::table('guns')->insert([
+            'name' => 'Glock 19',
+            'make' => '',
+            'price' => 5,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        DB::table('guns')->insert([
+            'name' => 'Glock 17',
+            'make' => '',
+            'price' => 5,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

@@ -14,7 +14,8 @@ class CustomerSeeder extends Seeder
             'name' => 'Joe Mazloum',
             'phone' => '+96170285659',
             'address' => 'kaakour',
-            'id_scan' => '/assets/images/default_profile.png',
+            'document_type' => 'Personal ID',
+            'document' => '/assets/images/default_profile.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -22,7 +23,8 @@ class CustomerSeeder extends Seeder
             'name' => 'Hans Meier',
             'phone' => '+4915204820649',
             'address' => 'Gronau',
-            'id_scan' => '/assets/images/default_profile.png',
+            'document_type' => 'Gun Permit',
+            'document' => '/assets/images/default_profile.png',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

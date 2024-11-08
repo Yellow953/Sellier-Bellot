@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\CaliberController;
 use App\Http\Controllers\CorridorController;
 use App\Http\Controllers\CustomerController;
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{customer}', [CustomerController::class, 'update'])->name('customers.update');
         Route::get('/delete/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
         Route::get('/download/{customer}', [CustomerController::class, 'download'])->name('customers.download');
+        Route::get('/new_transaction/{customer}', [CustomerController::class, 'new_transaction'])->name('customers.new_transaction');
     });
 
     // Guns
@@ -78,6 +80,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/save_password', [ProfileController::class, 'save_password'])->name('profile.save_password');
+    });
+
+    // Backup
+    Route::prefix('backup')->group(function () {
+        Route::get('/export', [BackupController::class, 'export'])->name('backup.export');
+        Route::post('/import', [BackupController::class, 'import'])->name('backup.import');
+        Route::get('/', [BackupController::class, 'index'])->name('backup');
     });
 
     // Logs

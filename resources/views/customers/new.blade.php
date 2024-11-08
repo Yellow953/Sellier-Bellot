@@ -2,8 +2,11 @@
 
 @section('title', 'Customers')
 
-@section('content')
+@php
+$document_types = Helper::get_document_types();
+@endphp
 
+@section('content')
 <style>
     .scanned {
         width: 150px;
@@ -11,7 +14,7 @@
     }
 </style>
 
-<script type="text/javascript" src="//cdn.asprise.com/scannerjs/scanner.js"></script>
+<script type="text/javascript" src="https://cdn.asprise.com/scannerjs/scanner.js"></script>
 
 <div class="container">
     <div class="d-flex align-items-center justify-content-between my-2">
@@ -47,15 +50,33 @@
             </fieldset>
         </div>
 
-        <div class="mb-2">
-            <label for="verification">Verification Documents *</label>
-            <div class="form-group">
-                <button type="button" onclick="scanToJpg();" class="btn btn-info btn-sm">Scan</button>
-                <div id="images" class="d-flex flex-wrap"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <label for="verification">Verification Documents *</label>
+                    <div class="form-group">
+                        <button type="button" onclick="scanToJpg();" class="btn btn-info btn-sm">Scan</button>
+                        <div id="images" class="d-flex flex-wrap"></div>
+                    </div>
+                </div>
+
+                <div id="scannedImagesInputs"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="document_type">Document Type *</label>
+                    <fieldset class="form-group">
+                        <select name="document_type" class="form-control" required>
+                            <option value=""></option>
+                            @foreach ($document_types as $type)
+                            <option value="{{ $type }}" {{ old('document_type')==$type ? 'selected' : '' }}>{{ $type }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </fieldset>
+                </div>
             </div>
         </div>
-
-        <div id="scannedImagesInputs"></div>
 
         <button type="submit" class="btn btn-info btn-block">
             Create

@@ -16,7 +16,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-        $customers = Customer::select('id', 'name', 'phone', 'address', 'id_scan')->filter()->latest()->paginate(25);
+        $customers = Customer::select('id', 'name', 'phone', 'document_type', 'address')->filter()->latest()->paginate(25);
         return view('customers.index', compact('customers'));
     }
 
@@ -31,6 +31,7 @@ class CustomerController extends Controller
             'name' => 'required',
             'phone' => 'required',
             'address' => 'required',
+            'document_type' => 'required',
             'scanned_images' => 'required|array',
             'scanned_images.*' => 'string'
         ]);
@@ -40,28 +41,27 @@ class CustomerController extends Controller
             $imageData = explode(',', $base64Image);
             $decodedImage = base64_decode($imageData[1]);
 
-            $imageName = 'id_scan_' . time() . '_' . $index . '.jpg';
+            $imageName = 'document_' . time() . '_' . $index . '.jpg';
             $path = public_path('uploads/customers/' . $imageName);
             file_put_contents($path, $decodedImage);
 
             $scannedImagesPaths[] = 'uploads/customers/' . $imageName;
         }
 
-        $idScanPath = $scannedImagesPaths[0] ?? null;
-        $gunLicenseScan = $scannedImagesPaths[1] ?? null;
+        $documentPath = $scannedImagesPaths[0] ?? null;
 
         Customer::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
-            'id_scan' => $idScanPath,
-            'gun_license_scan' => $gunLicenseScan,
+            'document_type' => $request->document_type,
+            'document' => $documentPath,
         ]);
 
         $text = ucwords(auth()->user()->name) . " created Customer: " . $request->name . ", datetime: " . now();
         Log::create(['text' => $text]);
 
-        return redirect()->route('customers')->with('success', 'Customer was successfully created.');
+        return redirect()->route('customers.new_trasaction')->with('success', 'Customer was successfully created.');
     }
 
 
@@ -115,12 +115,17 @@ class CustomerController extends Controller
 
     public function download(Customer $customer)
     {
-        $filePath = public_path($customer->id_scan);
+        $filePath = public_path($customer->document);
 
         if (File::exists($filePath)) {
-            return response()->download($filePath, "ID_Scan_{$customer->name}.jpg");
+            return response()->download($filePath, "Document_{$customer->name}.jpg");
         }
 
-        return redirect()->back()->with('error', 'Identification scan not found.');
+        return redirect()->back()->with('error', 'Document not found.');
+    }
+
+    public function new_transaction(Customer $customer)
+    {
+        return view('customers.new_transaction', compact('customer'));
     }
 }

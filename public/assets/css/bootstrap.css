@@ -4999,8 +4999,6 @@ input[type="button"].btn-block {
     border-radius: 0.25rem;
 }
 
-
-
 .nav-fill .nav-item {
     text-align: center;
 
@@ -11021,7 +11019,6 @@ a.text-dark:focus {
 
 .text-hide {
     font: 0/0 a;
-
     color: transparent;
     border: 0;
     background-color: transparent;
@@ -11034,4 +11031,12 @@ a.text-dark:focus {
 
 .invisible {
     visibility: hidden !important;
+}
+
+.backup-img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 7.5px 7.5px 5px lightgray;
 }

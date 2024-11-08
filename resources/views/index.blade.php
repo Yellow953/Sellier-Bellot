@@ -24,16 +24,24 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">New Customer? <a href="{{ route('customers.new') }}">Create</a></h4>
+                    <h4 class="card-title">New Customer? <a href="{{ route('customers.new') }}"
+                            class="text-info">Create</a></h4>
                 </div>
             </div>
         </div>
 
-        <!-- Transaction Form Section -->
         <div class="col-md-8">
+            <!-- Transaction Form Section -->
             <div class="card">
                 <div class="card-body" id="transaction_form_container">
                     Please Choose a Customer ...
+                </div>
+            </div>
+
+            <!-- Today's Orders Section -->
+            <div class="card">
+                <div class="card-body" id="today_orders_container">
+                    Today's Orders ...
                 </div>
             </div>
         </div>

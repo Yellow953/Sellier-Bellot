@@ -13,8 +13,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('address');
-            $table->string('id_scan');
-            $table->string('gun_license_scan')->nullable();
+            $table->string('document_type');
+            $table->string('document');
             $table->timestamps();
         });
     }

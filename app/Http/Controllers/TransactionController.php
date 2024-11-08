@@ -29,22 +29,20 @@ class TransactionController extends Controller
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'user_id' => 'required|exists:users,id',
-            'transaction_date' => 'required|date',
             'gun_source' => 'required|string',
             'ammo_source' => 'required|string',
             'item_type' => 'required|array',
-            'specific_item' => 'required|array',
-            'quantity' => 'required|array',
-            'unit_price' => 'required|array',
+            'specific_item' => 'required|array'
         ]);
 
         DB::beginTransaction();
+        $user = auth()->user();
 
         try {
             $transaction = Transaction::create([
                 'user_id' => $request->user_id,
                 'customer_id' => $request->customer_id,
-                'transaction_date' => $request->transaction_date,
+                'transaction_date' => $user->role == 'admin' ? $request->transaction_date : now(),
                 'gun_source' => $request->gun_source,
                 'ammo_source' => $request->ammo_source,
             ]);
@@ -52,33 +50,36 @@ class TransactionController extends Controller
             foreach ($request->item_type as $index => $itemType) {
                 switch ($itemType) {
                     case 'corridor':
+                        $corridor = Corridor::find($request->specific_item[$index]);
                         TransactionItem::create([
                             'transaction_id' => $transaction->id,
                             'type' => $itemType,
-                            'corridor_id' => $request->specific_item[$index],
-                            'quantity' => $request->quantity[$index],
-                            'unit_price' => $request->unit_price[$index],
-                            'total_price' => $request->quantity[$index] * $request->unit_price[$index],
+                            'corridor_id' => $corridor->id,
+                            'quantity' => 1,
+                            'unit_price' => $corridor->price,
+                            'total_price' => $corridor->price,
                         ]);
                         break;
                     case 'gun':
+                        $gun = Gun::find($request->specific_item[$index]);
                         TransactionItem::create([
                             'transaction_id' => $transaction->id,
                             'type' => $itemType,
-                            'gun_id' => $request->specific_item[$index],
+                            'gun_id' => $gun->id,
                             'quantity' => $request->quantity[$index],
-                            'unit_price' => $request->unit_price[$index],
-                            'total_price' => $request->quantity[$index] * $request->unit_price[$index],
+                            'unit_price' => $gun->price,
+                            'total_price' => $request->quantity[$index] * $gun->price,
                         ]);
                         break;
                     case 'caliber':
+                        $caliber = Caliber::find($request->specific_item[$index]);
                         TransactionItem::create([
                             'transaction_id' => $transaction->id,
                             'type' => $itemType,
-                            'caliber_id' => $request->specific_item[$index],
+                            'caliber_id' => $caliber->id,
                             'quantity' => $request->quantity[$index],
-                            'unit_price' => $request->unit_price[$index],
-                            'total_price' => $request->quantity[$index] * $request->unit_price[$index],
+                            'unit_price' => $caliber->price,
+                            'total_price' => $request->quantity[$index] * $caliber->price,
                         ]);
                         break;
 
@@ -96,7 +97,7 @@ class TransactionController extends Controller
             return redirect()->back()->with('success', 'Transaction created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->withErrors(['error' => 'Failed to create transaction. Please try again.']);
+            return back()->withErrors(['error' => 'Unable to Create Transaction...']);
         }
     }
 

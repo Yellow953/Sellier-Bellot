@@ -31,6 +31,13 @@
                         data-i18n="">Customers</span>
                 </a>
             </li>
+            <li class="nav-item {{ request()->routeIs('transactions*') ? 'bg-dark' : '' }}">
+                <a class="nav-link" href="{{ route('transactions') }}">
+                    <i class="la la-exchange"></i>
+                    <span class="menu-title {{ request()->routeIs('transactions*') ? 'text-white' : '' }}"
+                        data-i18n="">Transactions</span></a>
+            </li>
+            @if (auth()->user()->role == 'admin')
             <li class="nav-item {{ request()->routeIs('guns*') ? 'bg-dark' : '' }}">
                 <a class="nav-link" href="{{ route('guns') }}">
                     <i class="la la-crosshairs"></i>
@@ -52,17 +59,17 @@
                         data-i18n="">Calibers</span>
                 </a>
             </li>
-            <li class="nav-item {{ request()->routeIs('transactions*') ? 'bg-dark' : '' }}">
-                <a class="nav-link" href="{{ route('transactions') }}">
-                    <i class="la la-exchange"></i>
-                    <span class="menu-title {{ request()->routeIs('transactions*') ? 'text-white' : '' }}"
-                        data-i18n="">Transactions</span></a>
-            </li>
             <li class="nav-item {{ request()->routeIs('logs*') ? 'bg-dark' : '' }}">
                 <a class="nav-link" href="{{ route('logs') }}"><i class="la la-credit-card"></i>
                     <span class="menu-title {{ request()->routeIs('logs*') ? 'text-white' : '' }}"
                         data-i18n="">Logs</span></a>
             </li>
+            <li class="nav-item {{ request()->routeIs('backup*') ? 'bg-dark' : '' }}">
+                <a class="nav-link" href="{{ route('backup') }}"><i class="la la-server"></i>
+                    <span class="menu-title {{ request()->routeIs('backup*') ? 'text-white' : '' }}"
+                        data-i18n="">Backup</span></a>
+            </li>
+            @endif
         </ul>
     </div>
     <div class="navigation-background"></div>

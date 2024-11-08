@@ -6,12 +6,20 @@
         const transactionFormContainer = document.getElementById('transaction_form_container');
         const fetchCustomersUrl = @json(route('customers.fetch'));
         const fetchOptionsUrl = @json(route('transactions.fetch_options'));
+        const userRole = @json(auth()->user()->role);
 
         fetchCustomers('');
 
         searchButton.addEventListener('click', function() {
             fetchCustomers(searchInput.value);
         });
+
+        function applyRoleRestrictions() {
+            if (userRole !== 'admin') {
+                document.querySelector('input[name="transaction_date"]').disabled = true;
+                document.querySelectorAll('.unit-price-input').forEach(input => input.disabled = true);
+            }
+        }
 
         function fetchCustomers(search) {
             fetch(`${fetchCustomersUrl}?search=${encodeURIComponent(search)}`)
@@ -59,13 +67,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gun_source">Gun Source *</label>
-                                <input type="text" name="gun_source" class="form-control" required>
+                                <select name="gun_source" class="form-control" required>
+                                    <option value="club">Club</option>
+                                    <option value="self">Self</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="ammo_source">Ammo Source *</label>
-                                <input type="text" name="ammo_source" class="form-control" required>
+                                <select name="ammo_source" class="form-control" required>
+                                    <option value="club">Club</option>
+                                    <option value="self">Self</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -73,19 +87,23 @@
                     <div id="transaction_items_container"></div>
 
                     <div class="d-flex align-items-center justify-content-between mt-1">
-                        <button type="button" class="btn btn-sm btn-secondary mb-1" id="add_item_btn">Add Item</button>
+                        <button type="button" class="btn btn-sm btn-info mb-1" id="add_item_btn">Add Item</button>
                         <div class="form-group">
                             <label>Total Price: </label>
                             <span id="total_price">0.00</span>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-info mt-1">Submit Transaction</button>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-info mt-1">Submit Transaction</button>
+                    </div>
                 </form>
             `;
 
+            applyRoleRestrictions();
+
             document.getElementById('add_item_btn').addEventListener('click', addTransactionItem);
-            addTransactionItem(); // Add initial row
+            addTransactionItem();
         }
 
         function addTransactionItem() {
@@ -117,10 +135,19 @@
                 </div>
                 <button type="button" class="btn btn-danger btn-sm remove-item-btn"><i class="la la-trash"></i></button>
             `;
+
             document.getElementById('transaction_items_container').appendChild(itemContainer);
 
             itemContainer.querySelector('.item-type-select').addEventListener('change', function() {
                 loadItemOptions(this);
+                const quantityInput = itemContainer.querySelector('.quantity-input');
+
+                if (this.value === 'corridor') {
+                    quantityInput.addEventListener('change', () => {
+                        quantityInput.value = 1;
+                        calculateTotal();
+                    })
+                }
             });
 
             itemContainer.querySelector('.specific-item-select').addEventListener('change', function() {
@@ -138,6 +165,10 @@
                 itemContainer.remove();
                 calculateTotal();
             });
+
+            if (userRole !== 'admin') {
+                itemContainer.querySelector('.unit-price-input').disabled = true;
+            }
         }
 
         function loadItemOptions(itemTypeSelect) {

@@ -15,7 +15,9 @@ $auth_user = auth()->user();
 
                 <div class="d-flex align-items-center">
                     <a href="#" class="btn btn-secondary ml-1" data-toggle="modal" data-target="#filterModal">Filter</a>
+                    @if ($auth_user->role == 'admin')
                     <a href="{{ route('users.new') }}" class="btn btn-info ml-1">New User</a>
+                    @endif
                 </div>
             </div>
         </div>
