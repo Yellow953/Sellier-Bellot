@@ -47,7 +47,7 @@ $auth_user = auth()->user();
                             @forelse ($corridors as $corridor)
                             <tr>
                                 <th>{{ ucwords($corridor->name) }}</th>
-                                <td>{{ ucwords($corridor->price) }}</td>
+                                <td>${{ number_format($corridor->price, 2) }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
                                         @if ($auth_user->role == 'admin')
@@ -107,7 +107,7 @@ $auth_user = auth()->user();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-info"
                     onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
             </div>
 

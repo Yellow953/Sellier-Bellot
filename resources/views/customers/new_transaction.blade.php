@@ -11,7 +11,7 @@
         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <div class="form-group">
             <label for="transaction_date">Transaction Date *</label>
-            <input type="datetime-local" name="transaction_date" class="form-control" value="{{now()}}" required>
+            <input type="datetime-local" name="transaction_date" class="form-control" value="{{ now() }}" required>
         </div>
         <div class="row">
             <div class="col-md-6">

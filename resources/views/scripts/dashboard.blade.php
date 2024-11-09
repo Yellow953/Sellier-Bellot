@@ -52,7 +52,6 @@
         }
 
         function displayTransactionForm(customerId, customerName) {
-            const currentDate = new Date().toISOString().slice(0, 16);
             transactionFormContainer.innerHTML = `
                 <h5>Creating Transaction for ${customerName}</h5>
                 <form id="transaction_form" method="POST" enctype="multipart/form-data" action="{{ route('transactions.create') }}">
@@ -61,7 +60,7 @@
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                     <div class="form-group">
                         <label for="transaction_date">Transaction Date *</label>
-                        <input type="datetime-local" name="transaction_date" class="form-control" value="${currentDate}" required>
+                        <input type="datetime-local" name="transaction_date" class="form-control" value="{{ now() }}" required>
                     </div>
                     <div class="row">
                         <div class="col-md-6">

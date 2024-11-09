@@ -48,8 +48,8 @@ $auth_user = auth()->user();
                             @forelse ($calibers as $caliber)
                             <tr>
                                 <th>{{ ucwords($caliber->name) }}</th>
-                                <td>{{ $caliber->make }}</td>
-                                <td>{{ ucwords($caliber->price) }}</td>
+                                <td>{{ ucwords($caliber->make) }}</td>
+                                <td>${{ number_format($caliber->price, 2) }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
                                         @if ($auth_user->role == 'admin')
@@ -115,7 +115,7 @@ $auth_user = auth()->user();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-info"
                     onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
             </div>
 

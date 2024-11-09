@@ -10,36 +10,47 @@
         <h2>Edit Customer</h2>
     </div>
 
-    <form action="{{ route('customers.update', $customer->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    <div class="row">
+        <div class="col-md-9">
+            <form action="{{ route('customers.update', $customer->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-        <div class="form-group">
-            <label for="name">Name *</label>
-            <fieldset class="form-group">
-                <input type="text" name="name" class="form-control" placeholder="Enter Name"
-                    value="{{ $customer->name }}" required>
-            </fieldset>
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <fieldset class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Enter Name"
+                            value="{{ $customer->name }}" required>
+                    </fieldset>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <fieldset class="form-group">
+                        <input type="tel" name="phone" class="form-control" placeholder="Enter Phone Number"
+                            value="{{ $customer->phone }}" required>
+                    </fieldset>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address *</label>
+                    <fieldset class="form-group">
+                        <input type="text" name="address" class="form-control" placeholder="Enter Address"
+                            value="{{ $customer->address }}" required>
+                    </fieldset>
+                </div>
+
+                <button type="submit" class="btn btn-info btn-block">
+                    Update
+                </button>
+            </form>
         </div>
-
-        <div class="form-group">
-            <label for="phone">Phone Number *</label>
-            <fieldset class="form-group">
-                <input type="tel" name="phone" class="form-control" placeholder="Enter Phone Number"
-                    value="{{ $customer->phone }}" required>
-            </fieldset>
+        <div class="col-md-3">
+            <div class="document_section text-center">
+                <h3 class="text-info">{{ ucwords($customer->document_type) }}:</h3>
+                <img src="{{ $customer->document }}" class="document"> <br>
+                <a href="{{ route('customers.download', $customer->id) }}" class="btn btn-info mt-1">Download</a>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="address">Address *</label>
-            <fieldset class="form-group">
-                <input type="text" name="address" class="form-control" placeholder="Enter Address"
-                    value="{{ $customer->address }}" required>
-            </fieldset>
-        </div>
-
-        <button type="submit" class="btn btn-info btn-block">
-            Update
-        </button>
-    </form>
+    </div>
 </div>
 @endsection

@@ -42,6 +42,7 @@ $auth_user = auth()->user();
                                 <th>Name</th>
                                 <th>Phone</th>
                                 <th>Address</th>
+                                <th>Document Type</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -51,6 +52,7 @@ $auth_user = auth()->user();
                                 <th>{{ ucwords($customer->name) }}</th>
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ $customer->address }}</td>
+                                <td>{{ $customer->document_type }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
                                         <a href="{{ route('customers.download', $customer->id) }}"
@@ -70,12 +72,12 @@ $auth_user = auth()->user();
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4">No Customers yet ...</td>
+                                <td colspan="5">No Customers yet ...</td>
                             </tr>
                             @endforelse
 
                             <tr>
-                                <td colspan="4">{{ $customers->appends(['name' => request()->query('name'),
+                                <td colspan="5">{{ $customers->appends(['name' => request()->query('name'),
                                     'address' =>
                                     request()->query('address'), 'phone' =>
                                     request()->query('phone')])->links() }}</td>
@@ -122,7 +124,7 @@ $auth_user = auth()->user();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-info"
                     onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
             </div>
 

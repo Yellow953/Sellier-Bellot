@@ -11040,3 +11040,12 @@ a.text-dark:focus {
     overflow: hidden;
     box-shadow: 7.5px 7.5px 5px lightgray;
 }
+
+.document {
+    background-color: white;
+    padding: 15px;
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    width: 150px;
+    height: 250px;
+}

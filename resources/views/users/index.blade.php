@@ -127,7 +127,7 @@ $auth_user = auth()->user();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-info"
                     onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
             </div>
 

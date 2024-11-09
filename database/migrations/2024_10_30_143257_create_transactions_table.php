@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigInteger('customer_id')->unsigned();
             $table->string('gun_source');
             $table->string('ammo_source');
+            $table->double('total')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

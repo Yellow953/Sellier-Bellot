@@ -20,7 +20,7 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::select('id', 'user_id', 'customer_id', 'transaction_date')->filter()->latest()->paginate(25);
+        $transactions = Transaction::select('id', 'user_id', 'customer_id', 'transaction_date', 'gun_source', 'ammo_source', 'total')->filter()->latest()->paginate(25);
         return view('transactions.index', compact('transactions'));
     }
 
@@ -45,7 +45,10 @@ class TransactionController extends Controller
                 'transaction_date' => $user->role == 'admin' ? $request->transaction_date : now(),
                 'gun_source' => $request->gun_source,
                 'ammo_source' => $request->ammo_source,
+                'total' => 0
             ]);
+
+            $total = 0;
 
             foreach ($request->item_type as $index => $itemType) {
                 switch ($itemType) {
@@ -59,6 +62,7 @@ class TransactionController extends Controller
                             'unit_price' => $corridor->price,
                             'total_price' => $corridor->price,
                         ]);
+                        $total += $corridor->price;
                         break;
                     case 'gun':
                         $gun = Gun::find($request->specific_item[$index]);
@@ -70,6 +74,7 @@ class TransactionController extends Controller
                             'unit_price' => $gun->price,
                             'total_price' => $request->quantity[$index] * $gun->price,
                         ]);
+                        $total += $request->quantity[$index] * $gun->price;
                         break;
                     case 'caliber':
                         $caliber = Caliber::find($request->specific_item[$index]);
@@ -81,13 +86,14 @@ class TransactionController extends Controller
                             'unit_price' => $caliber->price,
                             'total_price' => $request->quantity[$index] * $caliber->price,
                         ]);
+                        $total += $request->quantity[$index] * $caliber->price;
                         break;
-
                     default:
-
                         break;
                 }
             }
+
+            $transaction->update(['total' => $total]);
 
             $text = ucwords(auth()->user()->name) .  " created Transaction: " . $transaction->id . ", datetime: " . now();
             Log::create(['text' => $text]);

@@ -44,17 +44,29 @@ $customers = Helper::get_customers();
                                 <th>#</th>
                                 <th>User</th>
                                 <th>Customer</th>
-                                <th>Date</th>
+                                <th>Info</th>
+                                <th>Total</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($transactions as $transaction)
                             <tr>
-                                <th>{{ $transaction->id }}</th>
-                                <th>{{ ucwords($transaction->user->name) }}</th>
-                                <td>{{ ucwords($transaction->customer->name ) }}</td>
-                                <td>{{ $transaction->transaction_date }}</td>
+                                <td><b>{{ $transaction->id }}</b></td>
+                                <td><b>{{ ucwords($transaction->user->name) }}</b></td>
+                                <td>
+                                    <b>{{ ucwords($transaction->customer->name ) }}</b><br>
+                                    {{ $transaction->customer->phone }} <br>
+                                    {{ $transaction->customer->document_type }} <br>
+                                    {{ $transaction->customer->address }}
+                                </td>
+                                <td>
+                                    <b>{{ $transaction->transaction_date }}</b> <br>
+                                    Gun Source: {{ $transaction->gun_source}} <br>
+                                    Ammo Source: {{ $transaction->ammo_source }}
+
+                                </td>
+                                <td>${{ number_format($transaction->total, 2) }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
                                         <a href="{{ route('transactions.show', $transaction->id) }}"
@@ -138,7 +150,7 @@ $customers = Helper::get_customers();
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-info"
                     onclick="document.getElementById('filterForm').submit();">Apply Filter</button>
             </div>
 
