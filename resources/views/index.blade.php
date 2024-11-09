@@ -3,6 +3,66 @@
 @section('title', 'Dashboard')
 
 @section('content')
+<style>
+    #today_transactions_container {
+        display: flex;
+        overflow-x: auto;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    #today_transactions_container .transaction-item {
+        min-width: 200px;
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+
+    #today_transactions_container .transaction-item:hover {
+        transform: scale(1.07);
+    }
+
+    #today_transactions_container .transaction-item div {
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+    }
+
+    #today_transactions_container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    #today_transactions_container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    #today_transactions_container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+    }
+
+    #today_transactions_container::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    .clickable-transaction {
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    .clickable-transaction:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
 <div class="container">
     <div class="row">
         <!-- Customer Search Section -->
@@ -38,10 +98,10 @@
                 </div>
             </div>
 
-            <!-- Today's Orders Section -->
+            <!-- Today's Transactions Section -->
             <div class="card">
-                <div class="card-body" id="today_orders_container">
-                    Today's Orders ...
+                <div class="card-body" id="today_transactions_container">
+                    Today's Transactions ...
                 </div>
             </div>
         </div>

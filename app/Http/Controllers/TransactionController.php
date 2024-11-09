@@ -8,6 +8,7 @@ use App\Models\Gun;
 use App\Models\Log;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -153,5 +154,12 @@ class TransactionController extends Controller
         }
 
         return response()->json($items);
+    }
+
+    public function fetchTodayTransactions()
+    {
+        $todayTransactions = Transaction::with('customer:id,name', 'user:id,name')->whereDate('transaction_date', Carbon::today())->orderBy('transaction_date', 'desc')->take(5)->get(['id', 'transaction_date', 'customer_id', 'user_id', 'total']);
+
+        return response()->json($todayTransactions);
     }
 }

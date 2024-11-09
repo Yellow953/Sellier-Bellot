@@ -98,3 +98,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/customers/fetch', [CustomerController::class, 'fetch'])->name('customers.fetch');
 Route::get('/transactions/fetch_options', [TransactionController::class, 'fetch_options'])->name('transactions.fetch_options');
+Route::get('/transactions/today', [TransactionController::class, 'fetchTodayTransactions'])->name('transactions.today');

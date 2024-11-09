@@ -7,8 +7,13 @@
         const fetchCustomersUrl = @json(route('customers.fetch'));
         const fetchOptionsUrl = @json(route('transactions.fetch_options'));
         const userRole = @json(auth()->user()->role);
+        const todayTransactionsContainer = document.getElementById('today_transactions_container');
+        const fetchTodayTransactionsUrl = @json(route('transactions.today'));
+        const transactionShowUrl = @json(route('transactions.show', ''));
 
         fetchCustomers('');
+
+        fetchTodayTransactions();
 
         searchButton.addEventListener('click', function() {
             fetchCustomers(searchInput.value);
@@ -197,11 +202,44 @@
         function calculateTotal() {
             let total = 0;
             document.querySelectorAll('.transaction-item').forEach(itemContainer => {
-                const quantity = parseFloat(itemContainer.querySelector('.quantity-input').value) || 0;
-                const unitPrice = parseFloat(itemContainer.querySelector('.unit-price-input').value) || 0;
+                const quantityInput = itemContainer.querySelector('.quantity-input');
+                const unitPriceInput = itemContainer.querySelector('.unit-price-input');
+
+                const quantity = quantityInput ? parseFloat(quantityInput.value) || 0 : 0;
+                const unitPrice = unitPriceInput ? parseFloat(unitPriceInput.value) || 0 : 0;
+
                 total += quantity * unitPrice;
             });
             document.getElementById('total_price').textContent = total.toFixed(2);
+        }
+
+
+        function fetchTodayTransactions() {
+            fetch(fetchTodayTransactionsUrl)
+                .then(response => response.json())
+                .then(data => {
+                    todayTransactionsContainer.innerHTML = '';
+                    if (data.length > 0) {
+                        data.forEach(transaction => {
+                            const transactionDiv = document.createElement('div');
+                            transactionDiv.classList.add('transaction-item', 'clickable-transaction');
+                            transactionDiv.innerHTML = `
+                                <div>Transaction: #${transaction.id}</div>
+                                <div>User: ${transaction.user.name}</div>
+                                <div>Customer: ${transaction.customer.name}</div>
+                                <div>Date: ${new Date(transaction.transaction_date).toLocaleString()}</div>
+                                <div>Total: $${transaction.total.toFixed(2)}</div>
+                            `;
+                            transactionDiv.addEventListener('click', () => {
+                                window.location.href = `${transactionShowUrl}/${transaction.id}`;
+                            });
+                            todayTransactionsContainer.appendChild(transactionDiv);
+                        });
+                    } else {
+                        todayTransactionsContainer.innerHTML = '<p>No Transactions found for today.</p>';
+                    }
+                })
+                .catch(error => console.error('Error fetching today\'s Transactions:', error));
         }
     });
 </script>
