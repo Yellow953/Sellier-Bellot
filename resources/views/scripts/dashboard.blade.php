@@ -213,7 +213,6 @@
             document.getElementById('total_price').textContent = total.toFixed(2);
         }
 
-
         function fetchTodayTransactions() {
             fetch(fetchTodayTransactionsUrl)
                 .then(response => response.json())
@@ -236,7 +235,7 @@
                             todayTransactionsContainer.appendChild(transactionDiv);
                         });
                     } else {
-                        todayTransactionsContainer.innerHTML = '<p>No Transactions found for today.</p>';
+                        todayTransactionsContainer.innerHTML = '<p>No Transactions Found For Today...</p>';
                     }
                 })
                 .catch(error => console.error('Error fetching today\'s Transactions:', error));

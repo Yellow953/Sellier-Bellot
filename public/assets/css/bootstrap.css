@@ -5182,8 +5182,6 @@ input[type="button"].btn-block {
     background: no-repeat center center;
     -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
-    
-    
 }
 
 @media (max-width: 575.98px) {
@@ -11054,4 +11052,39 @@ a.text-dark:focus {
     border-radius: 15px;
     width: 150px;
     height: 250px;
+}
+
+.px-custom {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.px-custom:hover {
+    color: #464855 !important;
+}
+
+#sidebar.collapsed {
+    width: 60px;
+    transition: width 0.3s;
+}
+
+#main-content.expanded {
+    margin-left: 60px;
+    transition: margin-left 0.3s;
+}
+
+#header-navbar.expanded-header {
+    margin-left: 60px;
+    transition: margin-left 0.3s;
+}
+
+#toggle-sidebar {
+    position: relative;
+    top: 5px;
+    left: 0;
+    transition: left 0.3s;
+}
+
+#toggle-sidebar.collapsed-position {
+    left: -10px;
 }

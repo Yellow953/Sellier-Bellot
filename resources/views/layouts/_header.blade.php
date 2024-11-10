@@ -2,11 +2,9 @@
 $user = auth()->user();
 @endphp
 
-<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top bg-dark">
+<nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top bg-dark"
+    id="header-navbar">
     <div class="navbar-wrapper">
-        <button id="sidebarToggle" class="btn btn-dark d-md-block d-none mr-1">
-            <i class="la la-bars"></i>
-        </button>
         <div class="navbar-container content">
             <div class="collapse navbar-collapse show" id="navbar-mobile">
                 <ul class="nav navbar-nav mr-auto float-left">

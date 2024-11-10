@@ -1,6 +1,10 @@
 <div class="content-header row">
     <div class="content-header-left col-md-4 col-12 mb-2">
-        <h3 class="content-header-title text-dark">Sellier & Bellot</h3>
+        <div class="d-flex align-items-center">
+            <button id="toggle-sidebar" class="btn btn-sm bg-white text-dark mx-2">
+                <i class="la la-bars"></i>
+            </button>
+        </div>
     </div>
     <div class="content-header-right col-md-8 col-12">
         <div class="breadcrumbs-top float-md-right">

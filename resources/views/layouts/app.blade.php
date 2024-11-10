@@ -24,79 +24,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/app-lite.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/core/menu/menu-types/vertical-menu.css') }}">
-
-       <!-- Add Bootstrap CSS -->
-<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <style>
-        .nav-link:hover,
-        .nav-link:active {
-            color: grey !important;
-        }
-
-        .customers_list {
-            max-height: 35vh !important;
-            overflow-y: auto !important;
-            padding: 5px !important;
-        }
-
-        #sidebarToggle {
-        position: fixed !important;
-        left: 250px !important;
-        top: 15px !important;
-        z-index: 999 !important;
-        transition: left 0.3s !important;
-    }
-
-    body.menu-collapsed #sidebarToggle {
-        left: 60px !important;
-    }
-
-    .menu-collapsed .main-menu {
-        width: 60px !important;
-        transform: translateZ(0) !important;
-    }
-
-    .menu-collapsed .navbar-header {
-        padding: 0 !important;
-    }
-
-    .menu-collapsed .navbar-header .brand-text {
-        display: none !important;
-    }
-
-    .menu-collapsed .main-menu .navigation-main .nav-item span {
-        display: none !important;
-    }
-
-    .menu-collapsed .main-menu:hover {
-        width: 250px !important;
-    }
-
-    .menu-collapsed .main-menu:hover .navbar-header .brand-text {
-        display: inline !important;
-    }
-
-    .menu-collapsed .main-menu:hover .navigation-main .nav-item span {
-        display: inline !important;
-    }
-
-    @media (max-width: 767.98px) {
-        #sidebarToggle {
-            display: none;
-        }
-    }
-    </style>
-
 </head>
 
 <body class="vertical-layout vertical-menu 2-columns menu-expanded fixed-navbar">
-
     @include('layouts._header')
 
     @include('layouts._sidenav')
 
-    <div class="app-content content">
+    <div class="app-content content main-content" id="main-content">
         <div class="content-wrapper">
             @include('layouts._breadcrumb')
 
@@ -120,28 +55,6 @@
 
     {{-- custom --}}
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-
-<!-- Add jQuery and Bootstrap JS -->
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const body = document.body;
-
-        // Check localStorage for saved state
-        if (localStorage.getItem('sidebarCollapsed') === 'true') {
-            body.classList.add('menu-collapsed');
-        }
-
-        sidebarToggle.addEventListener('click', function() {
-            body.classList.toggle('menu-collapsed');
-
-            // Save state to localStorage
-            localStorage.setItem('sidebarCollapsed', body.classList.contains('menu-collapsed'));
-        });
-    });
-</script>
-
 </body>
+
 </html>
