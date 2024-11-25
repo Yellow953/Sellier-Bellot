@@ -16,8 +16,8 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="gun_source">Gun Source *</label>
-                    <select name="gun_source" class="form-control" required>
+                    <label for="pistol_source">Pistol Source *</label>
+                    <select name="pistol_source" class="form-control" required>
                         <option value="club">Club</option>
                         <option value="self">Self</option>
                     </select>
@@ -104,8 +104,8 @@
                     <label>Type</label>
                     <select name="item_type[]" class="form-control item-type-select" required>
                         <option value="">Select Type</option>
-                        <option value="corridor">Rent a Corridor</option>
-                        <option value="gun">Rent a Gun</option>
+                        <option value="lane">Rent a Lane</option>
+                        <option value="pistol">Rent a Pistol</option>
                         <option value="caliber">Buy Calibers</option>
                     </select>
                 </div>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="form-group mr-2">
                     <label>Quantity</label>
-                    <input type="number" name="quantity[]" class="form-control quantity-input" min="1" value="1" required>
+                    <input type="number" name="quantity[]" class="form-control quantity-input" min="0.5" value="1" step="0.5" required>
                 </div>
                 <div class="form-group mr-2">
                     <label>Unit Price</label>
@@ -132,7 +132,7 @@
                 loadItemOptions(this);
                 const quantityInput = itemContainer.querySelector('.quantity-input');
 
-                if (this.value === 'corridor') {
+                if (this.value === 'lane') {
                     quantityInput.addEventListener('change', () => {
                         quantityInput.value = 1;
                         calculateTotal();

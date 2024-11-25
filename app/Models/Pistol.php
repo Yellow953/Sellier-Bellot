@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Gun extends Model
+class Pistol extends Model
 {
     protected $guarded = [];
 
@@ -24,7 +24,6 @@ class Gun extends Model
             $make = request('make');
             $q->where('make', 'LIKE', "%{$make}%");
         }
-
 
         return $q;
     }

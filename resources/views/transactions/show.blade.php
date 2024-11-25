@@ -20,7 +20,7 @@
                 <div class="col-md-6">
                     <h3 class="mb-1">Transaction Information</h3>
                     <p><strong>Date:</strong> {{ $transaction->transaction_date }}</p>
-                    <p><strong>Gun Source:</strong> {{ $transaction->gun_source }}</p>
+                    <p><strong>Pistol Source:</strong> {{ $transaction->pistol_source }}</p>
                     <p><strong>Ammo Source:</strong> {{ $transaction->ammo_source }}</p>
                 </div>
             </div>
@@ -43,11 +43,11 @@
                         <td>{{ ucfirst($item->type) }}</td>
                         <td>
                             @switch($item->type)
-                            @case('corridor')
-                            {{ ucwords($item->corridor->name) }}
+                            @case('lane')
+                            {{ ucwords($item->lane->name) }}
                             @break
-                            @case('gun')
-                            {{ ucwords($item->gun->name) }}
+                            @case('pistol')
+                            {{ ucwords($item->pistol->name) }}
                             @break
                             @case('caliber')
                             {{ ucwords($item->caliber->name) }}

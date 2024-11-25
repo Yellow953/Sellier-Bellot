@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Corridors')
+@section('title', 'Lanes')
 @php
 $auth_user = auth()->user();
 @endphp
@@ -13,7 +13,7 @@ $auth_user = auth()->user();
 
                 <div class="d-flex align-items-center">
                     <a href="#" class="btn btn-secondary ml-1" data-toggle="modal" data-target="#filterModal">Filter</a>
-                    <a href="{{ route('corridors.new') }}" class="btn btn-info ml-1">New Corridor</a>
+                    <a href="{{ route('lanes.new') }}" class="btn btn-info ml-1">New Lane</a>
                 </div>
             </div>
         </div>
@@ -44,19 +44,19 @@ $auth_user = auth()->user();
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($corridors as $corridor)
+                            @forelse ($lanes as $lane)
                             <tr>
-                                <th>{{ ucwords($corridor->name) }}</th>
-                                <td>${{ number_format($corridor->price, 2) }}</td>
+                                <th>{{ ucwords($lane->name) }}</th>
+                                <td>${{ number_format($lane->price, 2) }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
                                         @if ($auth_user->role == 'admin')
-                                        <a href="{{ route('corridors.edit', $corridor->id) }}"
+                                        <a href="{{ route('lanes.edit', $lane->id) }}"
                                             class="btn btn-warning btn-sm ml-1"><i class="la la-pencil-square"></i></a>
-                                        @if ($corridor->can_delete())
-                                        <a href="{{ route('corridors.destroy', $corridor->id) }}"
+                                        @if ($lane->can_delete())
+                                        <a href="{{ route('lanes.destroy', $lane->id) }}"
                                             class="btn btn-danger btn-sm ml-1 show_confirm" data-toggle="tooltip"
-                                            data-original-title="Delete Corridor"><i class="la la-trash"></i></a>
+                                            data-original-title="Delete Lane"><i class="la la-trash"></i></a>
                                         @endif
                                         @endif
                                     </div>
@@ -64,12 +64,12 @@ $auth_user = auth()->user();
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4">No Corridors yet ...</td>
+                                <td colspan="4">No Lanes yet ...</td>
                             </tr>
                             @endforelse
 
                             <tr>
-                                <td colspan="4">{{ $corridors->appends(['name' => request()->query('name'),
+                                <td colspan="4">{{ $lanes->appends(['name' => request()->query('name'),
                                     'make' =>
                                     request()->query('make'), 'phone' =>
                                     request()->query('phone'), 'role' =>
@@ -88,17 +88,17 @@ $auth_user = auth()->user();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="filterModalLabel">Filter Corridors</h5>
+                <h5 class="modal-title" id="filterModalLabel">Filter Lanes</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="filterForm" action="{{ route('corridors') }}" method="GET" enctype="multipart/form-data">
+                <form id="filterForm" action="{{ route('lanes') }}" method="GET" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
-                        <label for="name">Corridor Name</label>
+                        <label for="name">Lane Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name..."
                             value="{{ request()->query('name') }}">
                     </div>

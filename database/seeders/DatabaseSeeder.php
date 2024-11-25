@@ -11,9 +11,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             CustomerSeeder::class,
-            GunSeeder::class,
+            PistolSeeder::class,
             CaliberSeeder::class,
-            CorridorSeeder::class,
+            LaneSeeder::class,
         ]);
     }
 }

@@ -62,7 +62,7 @@ $customers = Helper::get_customers();
                                 </td>
                                 <td>
                                     <b>{{ $transaction->transaction_date }}</b> <br>
-                                    Gun Source: {{ $transaction->gun_source}} <br>
+                                    Pistol Source: {{ $transaction->pistol_source}} <br>
                                     Ammo Source: {{ $transaction->ammo_source }}
 
                                 </td>

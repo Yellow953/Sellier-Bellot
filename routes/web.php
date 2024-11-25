@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\CaliberController;
-use App\Http\Controllers\CorridorController;
+use App\Http\Controllers\LaneController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\GunController;
+use App\Http\Controllers\PistolController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -37,14 +37,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/new_transaction/{customer}', [CustomerController::class, 'new_transaction'])->name('customers.new_transaction');
     });
 
-    // Guns
-    Route::prefix('guns')->group(function () {
-        Route::get('/', [GunController::class, 'index'])->name('guns');
-        Route::get('/new', [GunController::class, 'new'])->name('guns.new');
-        Route::post('/create', [GunController::class, 'create'])->name('guns.create');
-        Route::get('/edit/{gun}', [GunController::class, 'edit'])->name('guns.edit');
-        Route::post('/update/{gun}', [GunController::class, 'update'])->name('guns.update');
-        Route::get('/delete/{gun}', [GunController::class, 'destroy'])->name('guns.destroy');
+    // Pistols
+    Route::prefix('pistols')->group(function () {
+        Route::get('/', [PistolController::class, 'index'])->name('pistols');
+        Route::get('/new', [PistolController::class, 'new'])->name('pistols.new');
+        Route::post('/create', [PistolController::class, 'create'])->name('pistols.create');
+        Route::get('/edit/{pistol}', [PistolController::class, 'edit'])->name('pistols.edit');
+        Route::post('/update/{pistol}', [PistolController::class, 'update'])->name('pistols.update');
+        Route::get('/delete/{pistol}', [PistolController::class, 'destroy'])->name('pistols.destroy');
     });
 
     // Calibers
@@ -57,14 +57,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/delete/{caliber}', [CaliberController::class, 'destroy'])->name('calibers.destroy');
     });
 
-    // Corridors
-    Route::prefix('corridors')->group(function () {
-        Route::get('/', [CorridorController::class, 'index'])->name('corridors');
-        Route::get('/new', [CorridorController::class, 'new'])->name('corridors.new');
-        Route::post('/create', [CorridorController::class, 'create'])->name('corridors.create');
-        Route::get('/edit/{corridor}', [CorridorController::class, 'edit'])->name('corridors.edit');
-        Route::post('/update/{corridor}', [CorridorController::class, 'update'])->name('corridors.update');
-        Route::get('/delete/{corridor}', [CorridorController::class, 'destroy'])->name('corridors.destroy');
+    // Lanes
+    Route::prefix('lanes')->group(function () {
+        Route::get('/', [LaneController::class, 'index'])->name('lanes');
+        Route::get('/new', [LaneController::class, 'new'])->name('lanes.new');
+        Route::post('/create', [LaneController::class, 'create'])->name('lanes.create');
+        Route::get('/edit/{lane}', [LaneController::class, 'edit'])->name('lanes.edit');
+        Route::post('/update/{lane}', [LaneController::class, 'update'])->name('lanes.update');
+        Route::get('/delete/{lane}', [LaneController::class, 'destroy'])->name('lanes.destroy');
     });
 
     // Transactions

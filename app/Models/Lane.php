@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Corridor extends Model
+class Lane extends Model
 {
     protected $guarded = [];
 
@@ -16,13 +16,10 @@ class Corridor extends Model
     // Filter
     public function scopeFilter($q)
     {
-
         if (request('name')) {
             $name = request('name');
             $q->where('name', 'LIKE', "%{$name}%");
         }
-
-
 
         return $q;
     }

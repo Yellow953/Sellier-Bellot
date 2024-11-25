@@ -12,18 +12,18 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('transaction_id')->unsigned();
             $table->string('type');
-            $table->bigInteger('gun_id')->unsigned()->nullable();
+            $table->bigInteger('pistol_id')->unsigned()->nullable();
             $table->bigInteger('caliber_id')->unsigned()->nullable();
-            $table->bigInteger('corridor_id')->unsigned()->nullable();
+            $table->bigInteger('lane_id')->unsigned()->nullable();
             $table->double('quantity')->unsigned()->default(1);
             $table->double('unit_price')->unsigned();
             $table->double('total_price')->unsigned();
             $table->timestamps();
 
             $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
-            $table->foreign('gun_id')->references('id')->on('guns')->onDelete('cascade');
+            $table->foreign('pistol_id')->references('id')->on('pistols')->onDelete('cascade');
             $table->foreign('caliber_id')->references('id')->on('calibers')->onDelete('cascade');
-            $table->foreign('corridor_id')->references('id')->on('corridors')->onDelete('cascade');
+            $table->foreign('lane_id')->references('id')->on('lanes')->onDelete('cascade');
         });
     }
 

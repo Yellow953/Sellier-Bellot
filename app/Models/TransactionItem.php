@@ -13,9 +13,9 @@ class TransactionItem extends Model
         return $this->belongsTo(Transaction::class);
     }
 
-    public function gun()
+    public function pistol()
     {
-        return $this->belongsTo(Gun::class);
+        return $this->belongsTo(Pistol::class);
     }
 
     public function caliber()
@@ -23,8 +23,8 @@ class TransactionItem extends Model
         return $this->belongsTo(Caliber::class);
     }
 
-    public function corridor()
+    public function lane()
     {
-        return $this->belongsTo(Corridor::class);
+        return $this->belongsTo(Lane::class);
     }
 }

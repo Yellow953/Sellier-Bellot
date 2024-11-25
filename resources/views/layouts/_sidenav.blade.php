@@ -42,18 +42,18 @@
                     </a>
                 </li>
                 @if (auth()->user()->role == 'admin')
-                <li class="nav-item {{ request()->routeIs('guns*') ? 'bg-dark' : '' }}">
-                    <a class="nav-link px-custom" href="{{ route('guns') }}">
+                <li class="nav-item {{ request()->routeIs('pistols*') ? 'bg-dark' : '' }}">
+                    <a class="nav-link px-custom" href="{{ route('pistols') }}">
                         <i class="la la-crosshairs"></i>
-                        <span class="menu-title  {{ request()->routeIs('guns*') ? 'text-white' : '' }}"
-                            data-i18n="">Guns</span>
+                        <span class="menu-title  {{ request()->routeIs('pistols*') ? 'text-white' : '' }}"
+                            data-i18n="">Pistols</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('corridors*') ? 'bg-dark' : '' }}">
-                    <a class="nav-link px-custom" href="{{ route('corridors') }}">
+                <li class="nav-item {{ request()->routeIs('lanes*') ? 'bg-dark' : '' }}">
+                    <a class="nav-link px-custom" href="{{ route('lanes') }}">
                         <i class="la la-bullseye"></i>
-                        <span class="menu-title  {{ request()->routeIs('corridors*') ? 'text-white' : '' }}"
-                            data-i18n="">Corridors</span>
+                        <span class="menu-title  {{ request()->routeIs('lanes*') ? 'text-white' : '' }}"
+                            data-i18n="">Lanes</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('calibers*') ? 'bg-dark' : '' }}">

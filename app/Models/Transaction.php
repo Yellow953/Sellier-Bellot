@@ -43,9 +43,9 @@ class Transaction extends Model
             $customer_id = request('customer_id');
             $q->where('customer_id', $customer_id);
         }
-        if (request('gun_source')) {
-            $gun_source = request('gun_source');
-            $q->where('gun_source', $gun_source);
+        if (request('pistol_source')) {
+            $pistol_source = request('pistol_source');
+            $q->where('pistol_source', $pistol_source);
         }
         if (request('ammo_source')) {
             $ammo_source = request('ammo_source');

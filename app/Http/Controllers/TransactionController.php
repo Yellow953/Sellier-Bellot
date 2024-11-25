@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Caliber;
-use App\Models\Corridor;
-use App\Models\Gun;
+use App\Models\Lane;
+use App\Models\Pistol;
 use App\Models\Log;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
@@ -21,7 +21,7 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::select('id', 'user_id', 'customer_id', 'transaction_date', 'gun_source', 'ammo_source', 'total')->filter()->latest()->paginate(25);
+        $transactions = Transaction::select('id', 'user_id', 'customer_id', 'transaction_date', 'pistol_source', 'ammo_source', 'total')->filter()->latest()->paginate(25);
         return view('transactions.index', compact('transactions'));
     }
 
@@ -30,7 +30,7 @@ class TransactionController extends Controller
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'user_id' => 'required|exists:users,id',
-            'gun_source' => 'required|string',
+            'pistol_source' => 'required|string',
             'ammo_source' => 'required|string',
             'item_type' => 'required|array',
             'specific_item' => 'required|array'
@@ -44,7 +44,7 @@ class TransactionController extends Controller
                 'user_id' => $request->user_id,
                 'customer_id' => $request->customer_id,
                 'transaction_date' => $user->role == 'admin' ? $request->transaction_date : now(),
-                'gun_source' => $request->gun_source,
+                'pistol_source' => $request->pistol_source,
                 'ammo_source' => $request->ammo_source,
                 'total' => 0
             ]);
@@ -53,29 +53,29 @@ class TransactionController extends Controller
 
             foreach ($request->item_type as $index => $itemType) {
                 switch ($itemType) {
-                    case 'corridor':
-                        $corridor = Corridor::find($request->specific_item[$index]);
+                    case 'lane':
+                        $lane = Lane::find($request->specific_item[$index]);
                         TransactionItem::create([
                             'transaction_id' => $transaction->id,
                             'type' => $itemType,
-                            'corridor_id' => $corridor->id,
+                            'lane_id' => $lane->id,
                             'quantity' => 1,
-                            'unit_price' => $corridor->price,
-                            'total_price' => $corridor->price,
+                            'unit_price' => $lane->price,
+                            'total_price' => $lane->price,
                         ]);
-                        $total += $corridor->price;
+                        $total += $lane->price;
                         break;
-                    case 'gun':
-                        $gun = Gun::find($request->specific_item[$index]);
+                    case 'pistol':
+                        $pistol = Pistol::find($request->specific_item[$index]);
                         TransactionItem::create([
                             'transaction_id' => $transaction->id,
                             'type' => $itemType,
-                            'gun_id' => $gun->id,
+                            'pistol_id' => $pistol->id,
                             'quantity' => $request->quantity[$index],
-                            'unit_price' => $gun->price,
-                            'total_price' => $request->quantity[$index] * $gun->price,
+                            'unit_price' => $pistol->price,
+                            'total_price' => $request->quantity[$index] * $pistol->price,
                         ]);
-                        $total += $request->quantity[$index] * $gun->price;
+                        $total += $request->quantity[$index] * $pistol->price;
                         break;
                     case 'caliber':
                         $caliber = Caliber::find($request->specific_item[$index]);
@@ -135,21 +135,21 @@ class TransactionController extends Controller
     public function fetch_options(Request $request)
     {
         $request->validate([
-            'type' => 'required|string|in:gun,caliber,corridor'
+            'type' => 'required|string|in:pistol,caliber,lane'
         ]);
 
         $type = $request->input('type');
         $items = [];
 
         switch ($type) {
-            case 'gun':
-                $items = Gun::select('id', 'name', 'price')->get();
+            case 'pistol':
+                $items = Pistol::select('id', 'name', 'price')->get();
                 break;
             case 'caliber':
                 $items = Caliber::select('id', 'name', 'price')->get();
                 break;
-            case 'corridor':
-                $items = Corridor::select('id', 'name', 'price')->get();
+            case 'lane':
+                $items = Lane::select('id', 'name', 'price')->get();
                 break;
         }
 
