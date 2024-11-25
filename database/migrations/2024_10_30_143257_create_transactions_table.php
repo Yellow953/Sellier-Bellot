@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('pistol_source');
             $table->string('ammo_source');
             $table->double('total')->nullable();
+            $table->boolean('closed')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

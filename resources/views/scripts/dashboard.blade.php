@@ -99,7 +99,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-info mt-1">Submit Transaction</button>
+                        <button type="submit" class="btn btn-info mt-1">Save Transaction</button>
                     </div>
                 </form>
             `;

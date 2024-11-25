@@ -36,7 +36,7 @@ $auth_user = auth()->user();
             </div>
             <div class="card-content collapse show">
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <table class="table table-bordered mb-0 text-center">
                         <thead>
                             <tr>
                                 <th>Name</th>

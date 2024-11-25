@@ -69,10 +69,14 @@ Route::middleware(['auth'])->group(function () {
 
     // Transactions
     Route::prefix('transactions')->group(function () {
-        Route::get('/', [TransactionController::class, 'index'])->name('transactions');
         Route::post('/create', [TransactionController::class, 'create'])->name('transactions.create');
+        Route::get('/edit/{transaction}', [TransactionController::class, 'edit'])->name('transactions.edit');
+        Route::post('/update/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
         Route::get('/show/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
         Route::get('/delete/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+        Route::get('/items/delete/{transaction_item}', [TransactionController::class, 'transaction_item_destroy'])->name('transactions.items.destroy');
+        Route::get('/report', [TransactionController::class, 'report'])->name('transactions.report');
+        Route::get('/', [TransactionController::class, 'index'])->name('transactions');
     });
 
     // Profile

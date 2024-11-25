@@ -1,25 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'New Transaction')
+@section('title', 'Edit Transaction')
 
 @section('content')
 <div class="container">
-    <h5>Creating Transaction for {{ ucwords($customer->name) }}</h5>
-    <form id="transaction_form" method="POST" enctype="multipart/form-data" action="{{ route('transactions.create') }}">
+    <h5>Updating Transaction for {{ ucwords($transaction->customer->name) }}</h5>
+    <form id="transaction_form" method="POST" enctype="multipart/form-data"
+        action="{{ route('transactions.update', $transaction->id) }}">
         @csrf
-        <input type="hidden" name="customer_id" value="{{ $customer->id }}">
-        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <div class="form-group">
             <label for="transaction_date">Transaction Date *</label>
-            <input type="datetime-local" name="transaction_date" class="form-control" value="{{ now() }}" required>
+            <input type="datetime-local" name="transaction_date" class="form-control"
+                value="{{ $transaction->transaction_date }}" required>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="pistol_source">Pistol Source *</label>
                     <select name="pistol_source" class="form-control" required>
-                        <option value="club">Club</option>
-                        <option value="self">Self</option>
+                        <option value="club" {{ $transaction->pistol_source == 'club' ? 'selected' : '' }}>Club</option>
+                        <option value="self" {{ $transaction->pistol_source == 'self' ? 'selected' : '' }}>Self</option>
                     </select>
                 </div>
             </div>
@@ -27,24 +27,64 @@
                 <div class="form-group">
                     <label for="ammo_source">Ammo Source *</label>
                     <select name="ammo_source" class="form-control" required>
-                        <option value="club">Club</option>
-                        <option value="self">Self</option>
+                        <option value="club" {{ $transaction->ammo_source == 'club' ? 'selected' : '' }}>Club</option>
+                        <option value="self" {{ $transaction->ammo_source == 'self' ? 'selected' : '' }}>Self</option>
                     </select>
                 </div>
             </div>
         </div>
         <h6>Transaction Items</h6>
-        <div id="transaction_items_container"></div>
+        <div class="existing_items">
+            @foreach ($transaction->items as $item)
+            <div class="d-flex mb-1 align-items-center">
+                <div class="form-group mr-2">
+                    <label>Type</label>
+                    <input type="text" class="form-control" value="{{ $item->type }}" disabled>
+                </div>
+                <div class="form-group mr-2">
+                    <label>Item</label>
+                    @switch($item->type)
+                    @case('lane')
+                    <input type="text" value="{{ $item->lane->name }}" disabled class="form-control">
+                    @break
+                    @case('pistol')
+                    <input type="text" value="{{ $item->pistol->name }}" disabled class="form-control">
+                    @break
+                    @case('caliber')
+                    <input type="text" value="{{ $item->caliber->name }}" disabled class="form-control">
+                    @break
+                    @default
+                    @endswitch
+                </div>
+                <div class="form-group mr-2">
+                    <label>Quantity</label>
+                    <input type="number" value="{{ $item->quantity }}" disabled class="form-control">
+                </div>
+                <div class="form-group mr-2">
+                    <label>Unit Price</label>
+                    <input type="number" value="{{ $item->unit_price }}" disabled class="form-control">
+                </div>
+                <a href="{{ route('transactions.items.destroy', $item->id) }}"
+                    class="btn btn-danger btn-sm remove-item-btn show_confirm" data-toggle="tooltip"
+                    data-original-title="Delete Caliber"><i class="la la-trash"></i></a>
+            </div>
+            @endforeach
+        </div>
+
+        <div id="transaction_items_container">
+        </div>
 
         <div class="d-flex align-items-center justify-content-between mt-1">
             <button type="button" class="btn btn-sm btn-info mb-1" id="add_item_btn">Add Item</button>
             <div class="form-group">
                 <label>Total Price: </label>
-                <span id="total_price">0.00</span>
+                <span id="total_price">0</span>
             </div>
         </div>
 
-        <div class="d-flex justify-content-center">
+        <input type="hidden" name="closed" value="0">
+        <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-success mt-1">Pay/Close Transaction</button>
             <button type="submit" class="btn btn-info mt-1">Save Transaction</button>
         </div>
     </form>
@@ -63,7 +103,7 @@
         }
 
         function calculateTotal() {
-            let total = 0;
+            let total = {{ number_format($transaction->total, 2) }};
             document.querySelectorAll('.transaction-item').forEach(itemContainer => {
                 const quantity = parseFloat(itemContainer.querySelector('.quantity-input').value) || 0;
                 const unitPrice = parseFloat(itemContainer.querySelector('.unit-price-input').value) || 0;
@@ -123,7 +163,7 @@
                     <label>Unit Price</label>
                     <input type="number" name="unit_price[]" class="form-control unit-price-input" step="any" min="1" required>
                 </div>
-                <button type="button" class="btn btn-danger btn-sm remove-item-btn"><i class="la la-trash"></i></button>
+                <button type="button" class="btn btn-danger btn-sm remove-item-btn my-auto"><i class="la la-trash"></i></button>
             `;
 
             document.getElementById('transaction_items_container').appendChild(itemContainer);
@@ -160,9 +200,17 @@
         }
 
         document.getElementById('add_item_btn').addEventListener('click', addTransactionItem);
-        addTransactionItem();
 
         applyRoleRestrictions();
+
+        const closeTransactionButton = document.querySelector('.btn-success.mt-1');
+        const transactionForm = document.getElementById('transaction_form');
+        const closedInput = transactionForm.querySelector('input[name="closed"]');
+
+        closeTransactionButton.addEventListener('click', function () {
+            closedInput.value = 1;
+            transactionForm.submit();
+        });
     });
 
 </script>

@@ -16,6 +16,8 @@ $customers = Helper::get_customers();
                 <h4 class="card-title">Actions</h4>
 
                 <div class="d-flex align-items-center">
+                    <a href="{{ route('home') }}" class="btn btn-success ml-1">New Transaction</a>
+                    <a href="{{ route('transactions.report') }}" class="btn btn-info ml-1">Generate Daily Report</a>
                     <a href="#" class="btn btn-secondary ml-1" data-toggle="modal" data-target="#filterModal">Filter</a>
                 </div>
             </div>
@@ -38,7 +40,7 @@ $customers = Helper::get_customers();
             </div>
             <div class="card-content collapse show">
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <table class="table table-bordered mb-0 text-center">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -52,7 +54,11 @@ $customers = Helper::get_customers();
                         <tbody>
                             @forelse ($transactions as $transaction)
                             <tr>
-                                <td><b>{{ $transaction->id }}</b></td>
+                                <td>
+                                    <b>{{ $transaction->id }}</b> <br>
+                                    <span class="{{ $transaction->closed ? 'text-danger' : 'text-info' }}">{{
+                                        $transaction->closed ? 'Closed' : 'Open' }}</span>
+                                </td>
                                 <td><b>{{ ucwords($transaction->user->name) }}</b></td>
                                 <td>
                                     <b>{{ ucwords($transaction->customer->name ) }}</b><br>
@@ -72,6 +78,11 @@ $customers = Helper::get_customers();
                                         <a href="{{ route('transactions.show', $transaction->id) }}"
                                             class="btn btn-info btn-sm ml-1"><i class="la la-eye"></i></a>
 
+                                        @if( !$transaction->closed )
+                                        <a href="{{ route('transactions.edit', $transaction->id) }}"
+                                            class="btn btn-warning btn-sm ml-1"><i class="la la-edit"></i></a>
+                                        @endif
+
                                         @if ($transaction->can_delete())
                                         <a href="{{ route('transactions.destroy', $transaction->id) }}"
                                             class="btn btn-danger btn-sm ml-1 show_confirm" data-toggle="tooltip"
@@ -82,12 +93,12 @@ $customers = Helper::get_customers();
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5">No Transactions yet ...</td>
+                                <td colspan="6">No Transactions yet ...</td>
                             </tr>
                             @endforelse
 
                             <tr>
-                                <td colspan="5">{{ $transactions->appends(['user_id' => request()->query('user_id'),
+                                <td colspan="6">{{ $transactions->appends(['user_id' => request()->query('user_id'),
                                     'customer_id' =>
                                     request()->query('customer_id'), 'transaction_date' =>
                                     request()->query('transaction_date')])->links() }}</td>
