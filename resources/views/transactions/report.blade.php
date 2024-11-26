@@ -9,6 +9,15 @@
             padding: 0;
         }
 
+        h2,
+        h3 {
+            margin: 5px 0;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -17,13 +26,22 @@
 
         th,
         td {
-            border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
 
-        th {
-            background-color: #f4f4f4;
+        .header-table td {
+            vertical-align: top;
+        }
+
+        .section-table {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .section-table td {
+            vertical-align: top;
         }
 
         .total {
@@ -31,132 +49,118 @@
         }
 
         .signature {
+            text-align: right;
             margin-top: 50px;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <h2 style="text-align: center;">Daily Report</h2>
-    <p>Date: {{ $date }}</p>
-
-    <h3>Transaction Summary</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Customer</th>
-                <th>Transaction Date</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($transactions as $transaction)
-            <tr>
-                <td>{{ $transaction->customer->name }}</td>
-                <td>{{ $transaction->transaction_date }}</td>
-                <td>${{ number_format($transaction->total, 2) }}</td>
-            </tr>
-            @endforeach
-        </tbody>
+    <!-- Header Section -->
+    <table class="header-table">
+        <tr>
+            <td style="width: 50%;">
+                <img src="{{ public_path('assets/images/logo.png') }}" alt="Logo" style="width: 150px;">
+            </td>
+            <td style="width: 50%; text-align: right;">
+                <h2>Daily Report</h2>
+                <p><b>Date:</b> {{ $date }}</p>
+            </td>
+        </tr>
     </table>
 
-    <h3>Items Used</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Quantity</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Calibers</td>
-                <td>{{ $calibers_total }}</td>
-                <td>${{ number_format($calibers->sum('total_price'), 2) }}</td>
-            </tr>
-            <tr>
-                <td>Lanes</td>
-                <td>{{ $lanes_total }}</td>
-                <td>${{ number_format($lanes->sum('total_price'), 2) }}</td>
-            </tr>
-            <tr>
-                <td>Pistols</td>
-                <td>{{ $pistols_total }}</td>
-                <td>${{ number_format($pistols->sum('total_price'), 2) }}</td>
-            </tr>
-        </tbody>
+    <!-- Items Section -->
+    <table class="section-table" style="margin: 0; padding: 0;">
+        <tr>
+            <td style="width: 33%; padding: 0;">
+                <h3>Calibers</h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Brass</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($caliber_analysis as $caliber)
+                        <tr>
+                            <td>{{ $caliber['name'] }}</td>
+                            <td>{{ $caliber['quantity'] }}</td>
+                            <td></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 33%; padding: 0;">
+                <h3>Lanes</h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($lane_analysis as $lane)
+                        <tr>
+                            <td>{{ $lane['name'] }}</td>
+                            <td>{{ $lane['quantity'] }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 33%; padding: 0;">
+                <h3>Pistols</h3>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pistol_analysis as $pistol)
+                        <tr>
+                            <td>{{ $pistol['name'] }}</td>
+                            <td>{{ $pistol['quantity'] }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </td>
+        </tr>
     </table>
 
-    <h3>Items Analysis</h3>
-
-    <h4>Calibers</h4>
-    <table>
-        <thead>
-            <tr>
-                <th>Caliber</th>
-                <th>Quantity Used</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($caliber_analysis as $caliber)
-            <tr>
-                <td>{{ $caliber['name'] }}</td>
-                <td>{{ $caliber['quantity'] }}</td>
-                <td>${{ number_format($caliber['total'], 2) }}</td>
-            </tr>
-            @endforeach
-        </tbody>
+    <table class="header-table">
+        <tr>
+            <td>
+                <!-- Summary Section -->
+                <div>
+                    <h3>Total Revenue</h3>
+                    <p class="total">Total: ${{ number_format($total_money, 2) }}</p>
+                </div>
+            </td>
+            <td>
+                <!-- Signature Section -->
+                <div class="signature">
+                    <p>__________________________</p>
+                    <p>Signature</p>
+                </div>
+            </td>
+        </tr>
     </table>
 
-    <h4>Lanes</h4>
-    <table>
-        <thead>
-            <tr>
-                <th>Lane</th>
-                <th>Times Used</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($lane_analysis as $lane)
-            <tr>
-                <td>{{ $lane['name'] }}</td>
-                <td>{{ $lane['quantity'] }}</td>
-                <td>${{ number_format($lane['total'], 2) }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <h4>Pistols</h4>
-    <table>
-        <thead>
-            <tr>
-                <th>Pistol</th>
-                <th>Times Used</th>
-                <th>Total Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($pistol_analysis as $pistol)
-            <tr>
-                <td>{{ $pistol['name'] }}</td>
-                <td>{{ $pistol['quantity'] }}</td>
-                <td>${{ number_format($pistol['total'], 2) }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <h3>Total Revenue</h3>
-    <p class="total">Total: ${{ number_format($total_money, 2) }}</p>
-
-    <div class="signature">
-        <p>__________________________</p>
-        <p>Signature</p>
-    </div>
 </body>
 
 </html>

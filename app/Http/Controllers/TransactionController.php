@@ -246,7 +246,7 @@ class TransactionController extends Controller
     public function report()
     {
         $date = now()->startOfDay();
-        $transactions = Transaction::with(['customer', 'items'])
+        $transactions = Transaction::with(['items'])
             ->whereDate('transaction_date', $date)
             ->get();
 
@@ -284,6 +284,7 @@ class TransactionController extends Controller
             ->setPaper('a4', 'portrait');
 
         return $pdf->download('daily_report_' . $date->toDateString() . '.pdf');
+        // return view('transactions.report', $data);
     }
 
     public function fetch_options(Request $request)
