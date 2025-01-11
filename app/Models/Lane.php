@@ -8,9 +8,14 @@ class Lane extends Model
 {
     protected $guarded = [];
 
+    public function items()
+    {
+        return $this->hasMany(TransactionItem::class);
+    }
+
     public function can_delete()
     {
-        return  auth()->user()->role == 'admin';
+        return $this->items()->count() == 0 && auth()->user()->role == 'admin';
     }
 
     // Filter
