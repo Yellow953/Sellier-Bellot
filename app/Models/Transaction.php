@@ -31,9 +31,10 @@ class Transaction extends Model
     // Filter
     public function scopeFilter($q)
     {
-        if (request('transaction_date')) {
-            $transaction_date = request('transaction_date');
-            $q->where('transaction_date', 'LIKE', "%{$transaction_date}%");
+ 	if (request('transaction_start_date') || request('endDate')) {
+            $transaction_start_date = request()->query('transaction_start_date') ?? Carbon::today();
+            $transaction_end_date = request()->query('transaction_end_date') ?? Carbon::today()->addYears(100);
+            $q->whereBetween('created_at', [$transaction_start_date, $transaction_end_date]);
         }
         if (request('user_id')) {
             $user_id = request('user_id');

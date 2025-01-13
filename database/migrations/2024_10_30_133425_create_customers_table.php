@@ -14,7 +14,8 @@ return new class extends Migration
             $table->string('phone');
             $table->string('address');
             $table->string('document_type');
-            $table->string('document');
+            $table->string('document1');
+            $table->string('document2')->nullable();
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ class CustomerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin')->only(['edit', 'update', 'destroy']);
+        $this->middleware('admin')->only('destroy');
     }
 
     public function index()
@@ -48,20 +48,19 @@ class CustomerController extends Controller
             $scannedImagesPaths[] = 'uploads/customers/' . $imageName;
         }
 
-        $documentPath = $scannedImagesPaths[0] ?? null;
-
-        Customer::create([
+        $customer = Customer::create([
             'name' => $request->name,
             'phone' => $request->phone,
             'address' => $request->address,
             'document_type' => $request->document_type,
-            'document' => $documentPath,
+            'document1' => $scannedImagesPaths[0],
+            'document2' => $scannedImagesPaths[1],
         ]);
 
         $text = ucwords(auth()->user()->name) . " created Customer: " . $request->name . ", datetime: " . now();
         Log::create(['text' => $text]);
 
-        return redirect()->route('customers.new_trasaction')->with('success', 'Customer was successfully created.');
+        return redirect()->route('customers.new_transaction', $customer->id)->with('success', 'Customer was successfully created.');
     }
 
 
@@ -113,9 +112,20 @@ class CustomerController extends Controller
         return response()->json($customers);
     }
 
-    public function download(Customer $customer)
+    public function download1(Customer $customer)
     {
-        $filePath = public_path($customer->document);
+        $filePath = public_path($customer->document1);
+
+        if (File::exists($filePath)) {
+            return response()->download($filePath, "Document_{$customer->name}.jpg");
+        }
+
+        return redirect()->back()->with('error', 'Document not found.');
+    }
+
+    public function download2(Customer $customer)
+    {
+        $filePath = public_path($customer->document2);
 
         if (File::exists($filePath)) {
             return response()->download($filePath, "Document_{$customer->name}.jpg");

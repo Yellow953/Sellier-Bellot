@@ -151,10 +151,17 @@ $customers = Helper::get_customers();
                     </div>
 
                     <div class="form-group">
-                        <label for="transaction_date">Transaction Date</label>
-                        <input type="date" class="form-control" name="transaction_date" id="transaction_date"
-                            value="{{ request()->query('transaction_date') }}">
+                        <label for="transaction_start_date">Transaction Start Date</label>
+                        <input type="date" class="form-control" name="transaction_start_date" id="transaction_start_date"
+                            value="{{ request()->query('transaction_start_date') }}">
                     </div>
+
+ 		   <div class="form-group">
+                        <label for="transaction_end_date">Transaction End Date</label>
+                        <input type="date" class="form-control" name="transaction_end_date" id="transaction_end_date"
+                            value="{{ request()->query('transaction_end_date') }}">
+                    </div>
+
 
                 </form>
 

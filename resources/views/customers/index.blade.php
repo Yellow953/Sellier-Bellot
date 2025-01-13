@@ -55,13 +55,10 @@ $auth_user = auth()->user();
                                 <td>{{ $customer->document_type }}</td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <a href="{{ route('customers.download', $customer->id) }}"
-                                            class="btn btn-info btn-sm ml-1"><i class="la la-download"></i></a>
-
-                                        @if ($auth_user->role == 'admin')
                                         <a href="{{ route('customers.edit', $customer->id) }}"
                                             class="btn btn-warning btn-sm ml-1"><i class="la la-pencil-square"></i></a>
-                                        @if ($customer->can_delete())
+                                        @if ($auth_user->role == 'admin')
+					@if ($customer->can_delete())
                                         <a href="{{ route('customers.destroy', $customer->id) }}"
                                             class="btn btn-danger btn-sm ml-1 show_confirm" data-toggle="tooltip"
                                             data-original-title="Delete Customer"><i class="la la-trash"></i></a>

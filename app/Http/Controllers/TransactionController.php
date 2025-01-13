@@ -19,7 +19,7 @@ class TransactionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin')->only(['edit', 'update', 'destroy']);
+        $this->middleware('admin')->only('destroy');
     }
 
     public function index()
@@ -121,8 +121,7 @@ class TransactionController extends Controller
         $request->validate([
             'pistol_source' => 'required|string',
             'ammo_source' => 'required|string',
-            'item_type' => 'required|array',
-            'specific_item' => 'required|array'
+
         ]);
 
         DB::beginTransaction();
@@ -138,7 +137,8 @@ class TransactionController extends Controller
 
             $total = $transaction->total;
 
-            foreach ($request->item_type as $index => $itemType) {
+            if($request->item_type){
+foreach ($request->item_type as $index => $itemType) {
                 switch ($itemType) {
                     case 'lane':
                         $lane = Lane::find($request->specific_item[$index]);
@@ -179,7 +179,8 @@ class TransactionController extends Controller
                     default:
                         break;
                 }
-            }
+            }	
+}
 
             $transaction->update(['total' => $total]);
 

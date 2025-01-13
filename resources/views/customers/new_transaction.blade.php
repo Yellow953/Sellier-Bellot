@@ -11,7 +11,7 @@
         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         <div class="form-group">
             <label for="transaction_date">Transaction Date *</label>
-            <input type="datetime-local" name="transaction_date" class="form-control" value="{{ now() }}" required>
+            <input type="datetime-local" name="transaction_date" class="form-control" value="" id="datetime" required>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -95,6 +95,10 @@
                 })
                 .catch(error => console.error('Error fetching item options:', error));
         }
+
+        const now = new Date();
+        const formattedDate = now.toISOString().slice(0, 16);
+        document.getElementById('datetime').value = formattedDate;
 
         function addTransactionItem() {
             const itemContainer = document.createElement('div');

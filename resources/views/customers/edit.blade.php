@@ -47,8 +47,12 @@
         <div class="col-md-3">
             <div class="document_section text-center">
                 <h3 class="text-info">{{ ucwords($customer->document_type) }}:</h3>
-                <img src="{{ $customer->document }}" class="document"> <br>
-                <a href="{{ route('customers.download', $customer->id) }}" class="btn btn-info mt-1">Download</a>
+                <img src="{{ asset($customer->document1) }}" class="document"> <br>
+                <a href="{{ route('customers.download1', $customer->id) }}" class="btn btn-info mt-1">Download</a>
+                @if($customer->document2)
+                <img src="{{ asset($customer->document2) }}" class="document"> <br>
+                <a href="{{ route('customers.download2', $customer->id) }}" class="btn btn-info mt-1">Download</a>
+                @endif
             </div>
         </div>
     </div>

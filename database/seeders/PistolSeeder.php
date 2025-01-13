@@ -35,17 +35,9 @@ class PistolSeeder extends Seeder
         ]);
 
         DB::table('pistols')->insert([
-            'name' => 'Glock 19',
+            'name' => 'Glock 17 MOS',
             'make' => '',
-            'price' => 5,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-
-        DB::table('pistols')->insert([
-            'name' => 'Glock 17',
-            'make' => '',
-            'price' => 5,
+            'price' => 12,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

@@ -33,7 +33,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit/{customer}', [CustomerController::class, 'edit'])->name('customers.edit');
         Route::post('/update/{customer}', [CustomerController::class, 'update'])->name('customers.update');
         Route::get('/delete/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-        Route::get('/download/{customer}', [CustomerController::class, 'download'])->name('customers.download');
+        Route::get('/download1/{customer}', [CustomerController::class, 'download1'])->name('customers.download1');
+        Route::get('/download2/{customer}', [CustomerController::class, 'download2'])->name('customers.download2');
         Route::get('/new_transaction/{customer}', [CustomerController::class, 'new_transaction'])->name('customers.new_transaction');
     });
 
