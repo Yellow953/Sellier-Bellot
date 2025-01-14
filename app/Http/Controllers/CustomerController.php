@@ -31,21 +31,40 @@ class CustomerController extends Controller
             'name' => 'required',
             'phone' => 'required',
             'address' => 'required',
-            'document_type' => 'required',
-            'scanned_images' => 'required|array',
-            'scanned_images.*' => 'string'
+            'document_type' => 'required'
         ]);
 
-        $scannedImagesPaths = [];
-        foreach ($request->scanned_images as $index => $base64Image) {
-            $imageData = explode(',', $base64Image);
-            $decodedImage = base64_decode($imageData[1]);
+        if ($request->upload) {
+            $index = 0;
+            $uploadImages = [];
 
-            $imageName = 'document_' . time() . '_' . $index . '.jpg';
-            $path = public_path('uploads/customers/' . $imageName);
-            file_put_contents($path, $decodedImage);
+            foreach ($request->file('upload') as $image) {
+                $ext = $image->getClientOriginalExtension();
+                $filename = time() . $index . '.' . $ext;
+                $image->move('uploads/customers/', $filename);
+                $path = '/uploads/customers/' . $filename;
+                $uploadImages[] = $path;
+                $index++;
+            }
 
-            $scannedImagesPaths[] = 'uploads/customers/' . $imageName;
+            $document1 = $uploadImages[0];
+            $document2 = $uploadImages[1] ?? null;
+        } else if ($request->scanned_images) {
+            $scannedImagesPaths = [];
+
+            foreach ($request->scanned_images as $index => $base64Image) {
+                $imageData = explode(',', $base64Image);
+                $decodedImage = base64_decode($imageData[1]);
+
+                $imageName = 'document_' . time() . '_' . $index . '.jpg';
+                $path = public_path('uploads/customers/' . $imageName);
+                file_put_contents($path, $decodedImage);
+
+                $scannedImagesPaths[] = 'uploads/customers/' . $imageName;
+            }
+
+            $document1 = $scannedImagesPaths[0];
+            $document2 = $scannedImagesPaths[1] ?? null;
         }
 
         $customer = Customer::create([
@@ -53,8 +72,8 @@ class CustomerController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'document_type' => $request->document_type,
-            'document1' => $scannedImagesPaths[0],
-            'document2' => $scannedImagesPaths[1],
+            'document1' => $document1,
+            'document2' => $document2,
         ]);
 
         $text = ucwords(auth()->user()->name) . " created Customer: " . $request->name . ", datetime: " . now();
@@ -62,7 +81,6 @@ class CustomerController extends Controller
 
         return redirect()->route('customers.new_transaction', $customer->id)->with('success', 'Customer was successfully created.');
     }
-
 
     public function edit(Customer $customer)
     {

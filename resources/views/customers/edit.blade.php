@@ -48,10 +48,12 @@
             <div class="document_section text-center">
                 <h3 class="text-info">{{ ucwords($customer->document_type) }}:</h3>
                 <img src="{{ asset($customer->document1) }}" class="document"> <br>
-                <a href="{{ route('customers.download1', $customer->id) }}" class="btn btn-info mt-1">Download</a>
+                <a href="{{ route('customers.download1', $customer->id) }}"
+                    class="btn btn-info text-center mt-1">Download</a>
                 @if($customer->document2)
-                <img src="{{ asset($customer->document2) }}" class="document"> <br>
-                <a href="{{ route('customers.download2', $customer->id) }}" class="btn btn-info mt-1">Download</a>
+                <img src="{{ asset($customer->document2) }}" class="document mt-1"> <br>
+                <a href="{{ route('customers.download2', $customer->id) }}"
+                    class="btn btn-info text-center mt-1">Download</a>
                 @endif
             </div>
         </div>

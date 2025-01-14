@@ -51,18 +51,7 @@ $document_types = Helper::get_document_types();
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="mb-2">
-                    <label for="verification">Verification Documents *</label>
-                    <div class="form-group">
-                        <button type="button" onclick="scanToJpg();" class="btn btn-info btn-sm">Scan</button>
-                        <div id="images" class="d-flex flex-wrap"></div>
-                    </div>
-                </div>
-
-                <div id="scannedImagesInputs"></div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="document_type">Document Type *</label>
                     <fieldset class="form-group">
@@ -75,6 +64,23 @@ $document_types = Helper::get_document_types();
                         </select>
                     </fieldset>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <label for="upload">Upload Document</label>
+                <fieldset class="form-group">
+                    <input type="file" name="upload[]" multiple class="form-control">
+                </fieldset>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-2">
+                    <label for="verification">Scan Document</label>
+                    <div class="form-group">
+                        <button type="button" onclick="scanToJpg();" class="btn btn-info btn-sm">Scan</button>
+                        <div id="images" class="d-flex flex-wrap"></div>
+                    </div>
+                </div>
+
+                <div id="scannedImagesInputs"></div>
             </div>
         </div>
 
