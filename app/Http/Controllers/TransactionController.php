@@ -49,7 +49,8 @@ class TransactionController extends Controller
                 'transaction_date' => $user->role == 'admin' ? $request->transaction_date : now(),
                 'pistol_source' => $request->pistol_source,
                 'ammo_source' => $request->ammo_source,
-                'total' => 0
+                'total' => 0,
+                'closed' => $request->closed,
             ]);
 
             $total = 0;
@@ -99,8 +100,13 @@ class TransactionController extends Controller
 
             $transaction->update(['total' => $total]);
 
-            $text = ucwords(auth()->user()->name) .  " created Transaction: " . $transaction->id . ", datetime: " . now();
-            Log::create(['text' => $text]);
+            if (!$transaction->closed) {
+                $text = ucwords(auth()->user()->name) .  " created Transaction: " . $transaction->id . ", datetime: " . now();
+                Log::create(['text' => $text]);
+            } else {
+                $text = ucwords(auth()->user()->name) .  " created and closed Transaction: " . $transaction->id . ", datetime: " . now();
+                Log::create(['text' => $text]);
+            }
 
             DB::commit();
 
@@ -121,7 +127,6 @@ class TransactionController extends Controller
         $request->validate([
             'pistol_source' => 'required|string',
             'ammo_source' => 'required|string',
-
         ]);
 
         DB::beginTransaction();
@@ -137,50 +142,50 @@ class TransactionController extends Controller
 
             $total = $transaction->total;
 
-            if($request->item_type){
-foreach ($request->item_type as $index => $itemType) {
-                switch ($itemType) {
-                    case 'lane':
-                        $lane = Lane::find($request->specific_item[$index]);
-                        TransactionItem::create([
-                            'transaction_id' => $transaction->id,
-                            'type' => $itemType,
-                            'lane_id' => $lane->id,
-                            'quantity' => 1,
-                            'unit_price' => $lane->price,
-                            'total_price' => $lane->price,
-                        ]);
-                        $total += $lane->price;
-                        break;
-                    case 'pistol':
-                        $pistol = Pistol::find($request->specific_item[$index]);
-                        TransactionItem::create([
-                            'transaction_id' => $transaction->id,
-                            'type' => $itemType,
-                            'pistol_id' => $pistol->id,
-                            'quantity' => $request->quantity[$index],
-                            'unit_price' => $pistol->price,
-                            'total_price' => $request->quantity[$index] * $pistol->price,
-                        ]);
-                        $total += $request->quantity[$index] * $pistol->price;
-                        break;
-                    case 'caliber':
-                        $caliber = Caliber::find($request->specific_item[$index]);
-                        TransactionItem::create([
-                            'transaction_id' => $transaction->id,
-                            'type' => $itemType,
-                            'caliber_id' => $caliber->id,
-                            'quantity' => $request->quantity[$index],
-                            'unit_price' => $caliber->price,
-                            'total_price' => $request->quantity[$index] * $caliber->price,
-                        ]);
-                        $total += $request->quantity[$index] * $caliber->price;
-                        break;
-                    default:
-                        break;
+            if ($request->item_type) {
+                foreach ($request->item_type as $index => $itemType) {
+                    switch ($itemType) {
+                        case 'lane':
+                            $lane = Lane::find($request->specific_item[$index]);
+                            TransactionItem::create([
+                                'transaction_id' => $transaction->id,
+                                'type' => $itemType,
+                                'lane_id' => $lane->id,
+                                'quantity' => 1,
+                                'unit_price' => $lane->price,
+                                'total_price' => $lane->price,
+                            ]);
+                            $total += $lane->price;
+                            break;
+                        case 'pistol':
+                            $pistol = Pistol::find($request->specific_item[$index]);
+                            TransactionItem::create([
+                                'transaction_id' => $transaction->id,
+                                'type' => $itemType,
+                                'pistol_id' => $pistol->id,
+                                'quantity' => $request->quantity[$index],
+                                'unit_price' => $pistol->price,
+                                'total_price' => $request->quantity[$index] * $pistol->price,
+                            ]);
+                            $total += $request->quantity[$index] * $pistol->price;
+                            break;
+                        case 'caliber':
+                            $caliber = Caliber::find($request->specific_item[$index]);
+                            TransactionItem::create([
+                                'transaction_id' => $transaction->id,
+                                'type' => $itemType,
+                                'caliber_id' => $caliber->id,
+                                'quantity' => $request->quantity[$index],
+                                'unit_price' => $caliber->price,
+                                'total_price' => $request->quantity[$index] * $caliber->price,
+                            ]);
+                            $total += $request->quantity[$index] * $caliber->price;
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }	
-}
+            }
 
             $transaction->update(['total' => $total]);
 
@@ -234,7 +239,11 @@ foreach ($request->item_type as $index => $itemType) {
         if ($transaction_item) {
             $text = ucwords(auth()->user()->name) .  " deleted Transaction Item: " . $transaction_item->id . ", datetime: " . now();
 
+            $transaction = $transaction_item->transaction;
             $transaction_item->delete();
+            $transaction->update([
+                'total' => $transaction->items->sum('total_price')
+            ]);
 
             Log::create(['text' => $text]);
 

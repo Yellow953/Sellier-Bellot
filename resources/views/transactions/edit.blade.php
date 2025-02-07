@@ -8,6 +8,7 @@
     <form id="transaction_form" method="POST" enctype="multipart/form-data"
         action="{{ route('transactions.update', $transaction->id) }}">
         @csrf
+
         <div class="form-group">
             <label for="transaction_date">Transaction Date *</label>
             <input type="datetime-local" name="transaction_date" class="form-control"
@@ -33,6 +34,7 @@
                 </div>
             </div>
         </div>
+
         <h6>Transaction Items</h6>
         <div class="existing_items">
             @foreach ($transaction->items as $item)
@@ -82,9 +84,12 @@
             </div>
         </div>
 
-        <input type="hidden" name="closed" value="0">
+        <input type="hidden" name="closed" value="{{ $transaction->closed ? '1' : '0' }}">
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn btn-success mt-1">Pay/Close Transaction</button>
+            @if (!$transaction->closed)
+            <button type="button" class="btn btn-success mt-1" id="closeTransaction">Pay/Close Transaction</button>
+            @endif
+
             <button type="submit" class="btn btn-info mt-1">Save Transaction</button>
         </div>
     </form>
@@ -140,7 +145,7 @@
             const itemContainer = document.createElement('div');
             itemContainer.classList.add('transaction-item', 'd-flex', 'mb-1', 'align-items-center');
             itemContainer.innerHTML = `
-                <div class="form-group mr-2">
+                <div class="form-group col-3 mr-2">
                     <label>Type</label>
                     <select name="item_type[]" class="form-control item-type-select" required>
                         <option value="">Select Type</option>
@@ -149,17 +154,17 @@
                         <option value="caliber">Buy Calibers</option>
                     </select>
                 </div>
-                <div class="form-group mr-2">
+                <div class="form-group col-3 mr-2">
                     <label>Item</label>
                     <select name="specific_item[]" class="form-control specific-item-select" required>
                         <option value="">Select Item</option>
                     </select>
                 </div>
-                <div class="form-group mr-2">
+                <div class="form-group col-2 mr-2">
                     <label>Quantity</label>
                     <input type="number" name="quantity[]" class="form-control quantity-input" min="0.5" value="1" step="0.5" required>
                 </div>
-                <div class="form-group mr-2">
+                <div class="form-group col-2 mr-2">
                     <label>Unit Price</label>
                     <input type="number" name="unit_price[]" class="form-control unit-price-input" step="any" min="1" required>
                 </div>
@@ -170,14 +175,6 @@
 
             itemContainer.querySelector('.item-type-select').addEventListener('change', function() {
                 loadItemOptions(this);
-                const quantityInput = itemContainer.querySelector('.quantity-input');
-
-                if (this.value === 'lane') {
-                    quantityInput.addEventListener('change', () => {
-                        quantityInput.value = 1;
-                        calculateTotal();
-                    })
-                }
             });
 
             itemContainer.querySelector('.specific-item-select').addEventListener('change', function() {
@@ -203,7 +200,7 @@
 
         applyRoleRestrictions();
 
-        const closeTransactionButton = document.querySelector('.btn-success.mt-1');
+        const closeTransactionButton = document.querySelector('#closeTransaction');
         const transactionForm = document.getElementById('transaction_form');
         const closedInput = transactionForm.querySelector('input[name="closed"]');
 

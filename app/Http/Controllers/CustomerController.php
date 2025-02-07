@@ -125,7 +125,7 @@ class CustomerController extends Controller
         $search = $request->query('search');
 
         $customers = Customer::where('name', 'like', "%{$search}%")
-            ->orWhere('phone', 'like', "%{$search}%")->get();
+            ->orWhere('phone', 'like', "%{$search}%")->limit(25)->get();
 
         return response()->json($customers);
     }
