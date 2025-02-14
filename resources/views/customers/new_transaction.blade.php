@@ -60,7 +60,6 @@
         function applyRoleRestrictions() {
             if (userRole !== 'admin') {
                 document.querySelector('input[name="transaction_date"]').disabled = true;
-                document.querySelectorAll('.unit-price-input').forEach(input => input.disabled = true);
             }
         }
 

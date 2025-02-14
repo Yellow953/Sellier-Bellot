@@ -63,11 +63,11 @@ class TransactionController extends Controller
                             'transaction_id' => $transaction->id,
                             'type' => $itemType,
                             'lane_id' => $lane->id,
-                            'quantity' => 1,
+                            'quantity' => $request->quantity[$index],
                             'unit_price' => $lane->price,
-                            'total_price' => $lane->price,
+                            'total_price' => $lane->price * $request->quantity[$index],
                         ]);
-                        $total += $lane->price;
+                        $total += $lane->price * $request->quantity[$index];
                         break;
                     case 'pistol':
                         $pistol = Pistol::find($request->specific_item[$index]);
@@ -151,11 +151,11 @@ class TransactionController extends Controller
                                 'transaction_id' => $transaction->id,
                                 'type' => $itemType,
                                 'lane_id' => $lane->id,
-                                'quantity' => 1,
+                                'quantity' => $request->quantity[$index],
                                 'unit_price' => $lane->price,
-                                'total_price' => $lane->price,
+                                'total_price' => $lane->price * $request->quantity[$index],
                             ]);
-                            $total += $lane->price;
+                            $total += $lane->price * $request->quantity[$index];
                             break;
                         case 'pistol':
                             $pistol = Pistol::find($request->specific_item[$index]);
