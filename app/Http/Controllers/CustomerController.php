@@ -96,6 +96,9 @@ class CustomerController extends Controller
             'document_type' => 'required'
         ]);
 
+        $document1 = $customer->document1;
+        $document2 = $customer->document2;
+
         if ($request->upload) {
             $index = 0;
             $uploadImages = [];
